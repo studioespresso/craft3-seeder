@@ -8,9 +8,11 @@
  * @copyright Copyright (c) 2018 Studio Espresso
  */
 
-namespace studioespresso\seeder\services;
+namespace studioespresso\seeder\services\fields;
 
 use Faker\Factory;
+use Faker\Provider\Base;
+use Faker\Provider\Lorem;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -30,6 +32,12 @@ class Fields extends Component  {
 	public function __construct() {
 		$this->factory = Factory::create();
 
+	}
+
+	public function Title() {
+		$title = $this->factory->realText(rand(15, 40));
+		$title = substr($title, 0, strlen($title) - 1);
+		return $title;
 	}
 
 	public function PlainText($field) {

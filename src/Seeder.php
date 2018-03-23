@@ -12,7 +12,9 @@ namespace studioespresso\seeder;
 
 use studioespresso\seeder\models\Settings;
 use studioespresso\seeder\services\Entries as EntriesService;
-use studioespresso\seeder\services\Fields as FieldsService;
+use studioespresso\seeder\services\fields\Fields as FieldsService;
+use studioespresso\seeder\services\fields\Redactor as RedactorService;
+use studioespresso\seeder\services\fields\CkEditor as CkEditorService;
 
 use Craft;
 use craft\base\Plugin;
@@ -39,6 +41,8 @@ use yii\base\Event;
  * @since     1.0.0
  * @property  EntriesService  entries
  * @property  FieldsService fields
+ * @property  RedactorService redactor
+ * @property  CkEditorService ckeditor
  * @property  Settings $settings
  * @method    Settings getSettings()
  */

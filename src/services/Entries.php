@@ -52,7 +52,7 @@ class Entries extends Component
 			$entry = new Entry([
 				'sectionId' => (int)$sectionId,
 				'typeId' => $entryType->id,
-				'title' => $faker->realText(30),
+				'title' => Seeder::$plugin->fields->Title(),
 			]);
 			$entry = $this->populateFields($typeFields, $entry);
 			Craft::$app->getElements()->saveElement($entry);
@@ -67,9 +67,11 @@ class Entries extends Component
 		$entryFields = [];
 		foreach($fields as $field) {
 			try {
-				$fieldType = $this->isFieldSupported($field);
-				if($fieldType) {
-					$entryFields[$field['handle']] = Seeder::$plugin->fields->$fieldType($field);
+				$fieldData = $this->isFieldSupported($field);
+				if($fieldData) {
+					$fieldProdider = $fieldData[0];
+					$fieldType = $fieldData[1];
+					$entryFields[$field['handle']] = Seeder::$plugin->$fieldProdider->$fieldType($field);
 				}
 
 			} catch (FieldNotFoundException $e) {
@@ -83,9 +85,15 @@ class Entries extends Component
 
 	private function isFieldSupported($field) {
 		$fieldType = explode('\\', get_class($field));
-		$fieldType = end($fieldType);
-		if(in_array($fieldType, get_class_methods(Seeder::$plugin->fields))) {
-			return $fieldType;
+		$fieldProvider = $fieldType[1];
+		$fieldType = $fieldType[2];
+
+		if(class_exists('studioespresso\\seeder\\services\\fields\\'.$fieldProvider)) {
+			if(in_array($fieldType, get_class_methods(Seeder::$plugin->$fieldProvider))) {
+				return [$fieldProvider, $fieldType];
+			} else {
+				throw new FieldNotFoundException('Fieldtype not supported');
+			}
 		} else {
 			throw new FieldNotFoundException('Fieldtype not supported');
 		}
