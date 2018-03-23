@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Seeder plugin for Craft CMS 3.x
+ *
+ * Seeder Settings.twig
+ *
+ * @author    Studio Espresso
+ * @copyright Copyright (c) 2018 Studio Espresso
+ * @link      https://studioespresso.co
+ * @package   Seeder
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("studioespresso\\seeder\\assetbundles\\seeder\\SeederAsset") %}
+
+{{ forms.textField({
+    label: 'Some Field',
+    instructions: 'Enter some setting here.',
+    id: 'someAttribute',
+    name: 'someAttribute',
+    value: settings['someAttribute']})
+}}
