@@ -34,8 +34,7 @@ use yii\base\Model;
  * @package   Seeder
  * @since     1.0.0
  */
-class Entries extends Component
-{
+class Entries extends Component {
 	/**
 	 * @param null $sectionId
 	 *
@@ -44,26 +43,9 @@ class Entries extends Component
 	 * @throws \yii\base\Exception
 	 * @throws \yii\base\InvalidConfigException
 	 */
-	public function generate($sectionId = null) {
 	public function generate( $sectionId = null, $count ) {
 		$faker = Factory::create();
 
-		$section = Craft::$app->sections->getSectionById((int)$sectionId);
-		foreach($section->getEntryTypes() as $entryType) {
-			$typeFields = Craft::$app->fields->getFieldsByLayoutId($entryType->getFieldLayoutId());
-			$entry = new Entry([
-				'sectionId' => (int)$sectionId,
-				'typeId' => $entryType->id,
-				'title' => Seeder::$plugin->fields->Title(),
-			]);
-
-			$entry = $this->populateFields($typeFields, $entry);
-			Craft::$app->getElements()->saveElement($entry);
-
-			$record = new SeederEntryRecord();
-			$record->entryId = $entry->id;
-			$record->section = (int)$sectionId;
-			$record->save();
 		$section = Craft::$app->sections->getSectionById( (int) $sectionId );
 
 		foreach ( $section->getEntryTypes() as $entryType ) {
@@ -91,39 +73,40 @@ class Entries extends Component
 	 * @param $fields
 	 * @param Entry $entry
 	 */
-	private function populateFields($fields, $entry) {
+	private function populateFields( $fields, $entry ) {
 		$entryFields = [];
-		foreach($fields as $field) {
+		foreach ( $fields as $field ) {
 			try {
-				$fieldData = $this->isFieldSupported($field);
-				if($fieldData) {
-					$fieldProdider = $fieldData[0];
-					$fieldType = $fieldData[1];
-					$entryFields[$field['handle']] = Seeder::$plugin->$fieldProdider->$fieldType($field);
+				$fieldData = $this->isFieldSupported( $field );
+				if ( $fieldData ) {
+					$fieldProdider                   = $fieldData[0];
+					$fieldType                       = $fieldData[1];
+					$entryFields[ $field['handle'] ] = Seeder::$plugin->$fieldProdider->$fieldType( $field );
 				}
 
-			} catch (FieldNotFoundException $e) {
-
+			} catch ( FieldNotFoundException $e ) {
+				dd($e);
 			}
 		}
-		$entry->setFieldValues($entryFields);
+		$entry->setFieldValues( $entryFields );
+
 		return $entry;
 
 	}
 
-	private function isFieldSupported($field) {
-		$fieldType = explode('\\', get_class($field));
+	private function isFieldSupported( $field ) {
+		$fieldType     = explode( '\\', get_class( $field ) );
 		$fieldProvider = $fieldType[1];
-		$fieldType = $fieldType[2];
+		$fieldType     = $fieldType[2];
 
-		if(class_exists('studioespresso\\seeder\\services\\fields\\'.$fieldProvider)) {
-			if(in_array($fieldType, get_class_methods(Seeder::$plugin->$fieldProvider))) {
-				return [$fieldProvider, $fieldType];
+		if ( class_exists( 'studioespresso\\seeder\\services\\fields\\' . $fieldProvider ) ) {
+			if ( in_array( $fieldType, get_class_methods( Seeder::$plugin->$fieldProvider ) ) ) {
+				return [ $fieldProvider, $fieldType ];
 			} else {
-				throw new FieldNotFoundException('Fieldtype not supported');
+				throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
 			}
 		} else {
-			throw new FieldNotFoundException('Fieldtype not supported');
+			throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldProvider );
 		}
 	}
 
