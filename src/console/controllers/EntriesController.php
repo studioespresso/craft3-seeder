@@ -55,9 +55,9 @@ class EntriesController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex($section = null)
+    public function actionIndex($section = null, $count = 20)
     {
-		$result = Seeder::$plugin->entries->generate($section);
+		$result = Seeder::$plugin->entries->generate($section, $count);
 
         return $result;
     }

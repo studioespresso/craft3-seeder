@@ -45,6 +45,7 @@ class Entries extends Component
 	 * @throws \yii\base\InvalidConfigException
 	 */
 	public function generate($sectionId = null) {
+	public function generate( $sectionId = null, $count ) {
 		$faker = Factory::create();
 
 		$section = Craft::$app->sections->getSectionById((int)$sectionId);
@@ -63,7 +64,27 @@ class Entries extends Component
 			$record->entryId = $entry->id;
 			$record->section = (int)$sectionId;
 			$record->save();
+		$section = Craft::$app->sections->getSectionById( (int) $sectionId );
+
+		foreach ( $section->getEntryTypes() as $entryType ) {
+			for ( $x = 0; $x <= $count; $x ++ ) {
+				$typeFields = Craft::$app->fields->getFieldsByLayoutId( $entryType->getFieldLayoutId() );
+				$entry      = new Entry( [
+					'sectionId' => (int) $sectionId,
+					'typeId'    => $entryType->id,
+					'title'     => Seeder::$plugin->fields->Title(),
+				] );
+
+				$entry = $this->populateFields( $typeFields, $entry );
+				Craft::$app->getElements()->saveElement( $entry );
+
+				$record          = new SeederEntryRecord();
+				$record->entryId = $entry->id;
+				$record->section = (int) $sectionId;
+				$record->save();
+			}
 		}
+
 	}
 
 	/**
