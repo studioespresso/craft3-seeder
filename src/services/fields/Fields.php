@@ -10,6 +10,11 @@
 
 namespace studioespresso\seeder\services\fields;
 
+use craft\fields\Email;
+use craft\fields\Matrix;
+use craft\fields\PlainText;
+use craft\fields\Url;
+use craft\models\MatrixBlockType;
 use Faker\Factory;
 use Faker\Provider\Base;
 use Faker\Provider\Lorem;
@@ -40,15 +45,35 @@ class Fields extends Component  {
 		return $title;
 	}
 
+	/**
+	 * @param PlainText $field
+	 */
 	public function PlainText($field) {
 		return $this->factory->realText($field->charLimit ? $field->charLimit : 200);
 	}
 
+	/**
+	 * @param Email $field
+	 */
 	public function Email($field) {
 		return $this->factory->email();
 	}
 
+	/**
+	 * @param Url $field
+	 **/
 	public function Url($field) {
 		return $this->factory->url();
+	}
+
+	/**
+	 * @param Matrix $field
+	 */
+	public function Matrix($field) {
+		/* @var $blockType MatrixBlockType*/
+		foreach($field->getBlockTypes() as $blockType) {
+			$blockTypeLayout = $blockType->fieldLayoutId;
+
+		}
 	}
 }

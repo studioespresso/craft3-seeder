@@ -14,6 +14,7 @@ use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
 use Faker\Provider\Person;
+use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -54,8 +55,14 @@ class Entries extends Component
 				'typeId' => $entryType->id,
 				'title' => Seeder::$plugin->fields->Title(),
 			]);
+
 			$entry = $this->populateFields($typeFields, $entry);
 			Craft::$app->getElements()->saveElement($entry);
+
+			$record = new SeederEntryRecord();
+			$record->entryId = $entry->id;
+			$record->section = (int)$sectionId;
+			$record->save();
 		}
 	}
 
