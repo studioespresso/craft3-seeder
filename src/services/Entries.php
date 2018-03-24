@@ -49,7 +49,7 @@ class Entries extends Component {
 		$section = Craft::$app->sections->getSectionById( (int) $sectionId );
 
 		foreach ( $section->getEntryTypes() as $entryType ) {
-			for ( $x = 0; $x <= $count; $x ++ ) {
+			for ( $x = 1; $x <= $count; $x ++ ) {
 				$typeFields = Craft::$app->fields->getFieldsByLayoutId( $entryType->getFieldLayoutId() );
 				$entry      = new Entry( [
 					'sectionId' => (int) $sectionId,
