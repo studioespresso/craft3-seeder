@@ -10,14 +10,18 @@
 
 namespace studioespresso\seeder\services\fields;
 
+use craft\elements\Asset;
+use craft\fields\Assets as AssetsField;
 use craft\fields\Email;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
 use craft\fields\Url;
+use craft\helpers\Assets;
+use craft\models\VolumeFolder;
+use craft\services\Path;
 use craft\models\MatrixBlockType;
+use craft\web\UploadedFile;
 use Faker\Factory;
-use Faker\Provider\Base;
-use Faker\Provider\Lorem;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -66,6 +70,43 @@ class Fields extends Component  {
 		return $this->factory->url();
 	}
 
+
+	/**
+	 * @param AssetsField $field
+	 */
+	public function Assets($field) {
+
+		$path = new Path();
+		$dir = $path->getTempAssetUploadsPath() . '/seeder/';
+		if(!is_dir($dir)){ mkdir($dir); }
+
+		$image = $this->factory->imageUrl(1600,1200);
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $image);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		$picture = curl_exec($ch);
+		curl_close($ch);
+
+		$tmpImage = 'photo-' . rand() . '.jpg';
+		$tempPath = $dir . $tmpImage;
+		$saved = file_put_contents($tempPath, $picture);
+
+		$folder = explode(':', $field->defaultUploadLocationSource);
+		$folderId = $folder[1];
+		$assetFolder = Craft::$app->assets->getFolderById($folderId);
+
+		$result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+
+		if($result) {
+			return [$result->id];
+		}
+
+	}
+
 	/**
 	 * @param Matrix $field
 	 */
@@ -75,5 +116,32 @@ class Fields extends Component  {
 			$blockTypeLayout = $blockType->fieldLayoutId;
 
 		}
+	}
+
+	private function uploadNewAsset($folderId, $path) {
+
+
+		$assets = Craft::$app->getAssets();
+
+		$folder = $assets->findFolder(['id' => $folderId]);
+
+		if (!$folder) {
+			throw new BadRequestHttpException('The target folder provided for uploading is not valid');
+		}
+
+		// Check the permissions to upload in the resolved folder.
+		$filename = Assets::prepareAssetName($path);
+
+		$asset = new Asset();
+		$asset->tempFilePath = $path;
+		$asset->filename = $filename;
+		$asset->newFolderId = $folder->id;
+		$asset->volumeId = $folder->volumeId;
+		$asset->avoidFilenameConflicts = true;
+		$asset->setScenario(Asset::SCENARIO_CREATE);
+
+		$result = Craft::$app->getElements()->saveElement($asset);
+
+		return $asset;
 	}
 }
