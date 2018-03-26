@@ -75,35 +75,39 @@ class Fields extends Component  {
 	 * @param AssetsField $field
 	 */
 	public function Assets($field) {
+		$assets = [];
+
 
 		$path = new Path();
 		$dir = $path->getTempAssetUploadsPath() . '/seeder/';
 		if(!is_dir($dir)){ mkdir($dir); }
 
-		$image = $this->factory->imageUrl(1600,1200);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $image);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		$picture = curl_exec($ch);
-		curl_close($ch);
-
-		$tmpImage = 'photo-' . rand() . '.jpg';
-		$tempPath = $dir . $tmpImage;
-		$saved = file_put_contents($tempPath, $picture);
-
 		$folder = explode(':', $field->defaultUploadLocationSource);
 		$folderId = $folder[1];
 		$assetFolder = Craft::$app->assets->getFolderById($folderId);
 
-		$result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+		for ( $x = 1; $x <= $field->limit; $x ++ ) {
 
-		if($result) {
-			return [$result->id];
+
+			$image = $this->factory->imageUrl(1600,1200);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $image);
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			$picture = curl_exec($ch);
+			curl_close($ch);
+
+			$tmpImage = 'photo-' . rand() . '.jpg';
+			$tempPath = $dir . $tmpImage;
+			$saved = file_put_contents($tempPath, $picture);
+
+			$result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+			$assets[] = $result->id;
 		}
+
+		return $assets;
 
 	}
 
