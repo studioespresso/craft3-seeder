@@ -104,6 +104,7 @@ class Fields extends Component  {
 			$saved = file_put_contents($tempPath, $picture);
 
 			$result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+			Seeder::$plugin->entries->saveSeededAsset($result);
 			$assets[] = $result->id;
 		}
 

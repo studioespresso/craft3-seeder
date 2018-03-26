@@ -10,10 +10,12 @@
 
 namespace studioespresso\seeder\services;
 
+use craft\elements\Asset;
 use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
 use Faker\Provider\Person;
+use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\Seeder;
 
@@ -59,14 +61,30 @@ class Entries extends Component {
 
 				$entry = $this->populateFields( $typeFields, $entry );
 				Craft::$app->getElements()->saveElement( $entry );
+				$this->saveSeededEntry($entry);
 
-				$record          = new SeederEntryRecord();
-				$record->entryId = $entry->id;
-				$record->section = (int) $sectionId;
-				$record->save();
 			}
 		}
 
+	}
+
+	/**
+	 * @param Entry $entry
+	 */
+	public function saveSeededEntry($entry) {
+		$record          = new SeederEntryRecord();
+		$record->entryId = $entry->id;
+		$record->section = $entry->sectionId;
+		$record->save();
+	}
+
+	/**
+	 * @param Asset $asset
+	 */
+	public function saveSeededAsset($asset) {
+		$record = new SeederAssetRecord();
+		$record->assetId = $asset->id;
+		$record->save();
 	}
 
 	/**

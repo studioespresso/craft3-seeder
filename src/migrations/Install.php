@@ -4,6 +4,7 @@ namespace studioespresso\seeder\migrations;
 
 use Craft;
 use craft\db\Migration;
+use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use yii\db\Schema;
 
@@ -29,6 +30,16 @@ class Install extends Migration
 			'uid'         => $this->uid()->notNull(),
 		] );
 
+		$this->createTable(
+			SeederAssetRecord::$tableName, [
+			'id' => $this->primaryKey(),
+			'assetId' => $this->integer()->notNull(),
+
+			'dateCreated' => $this->dateTime()->notNull(),
+			'dateUpdated' => $this->dateTime()->notNull(),
+			'uid'         => $this->uid()->notNull(),
+		] );
+
 	}
 
 	/**
@@ -37,5 +48,6 @@ class Install extends Migration
 	public function safeDown()
 	{
 		$this->dropTable(SeederEntryRecord::$tableName);
+		$this->dropTable(SeederAssetRecord::$tableName);
 	}
 }
