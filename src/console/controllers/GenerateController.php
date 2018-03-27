@@ -70,9 +70,9 @@ class GenerateController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function actionCategoeis($section = null, $count = 20)
+	public function actionCategories($group = null, $count = 20)
 	{
-		$result = Seeder::$plugin->entries->generate($section, $count);
+		$result = Seeder::$plugin->categories->generate($group, $count);
 
 		return $result;
 	}

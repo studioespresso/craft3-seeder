@@ -37,6 +37,7 @@
         "hasCpSection": false,
         "components": {
             "entries": "studioespresso\\seeder\\services\\Entries",
+            "categories": "studioespresso\\seeder\\services\\Categories",
             "fields": "studioespresso\\seeder\\services\\fields\\Fields",
             "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
             "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor"
