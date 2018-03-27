@@ -42,7 +42,7 @@ use yii\helpers\Console;
  * @package   Seeder
  * @since     1.0.0
  */
-class EntriesController extends Controller
+class GenerateController extends Controller
 {
     // Public Methods
     // =========================================================================
@@ -55,10 +55,25 @@ class EntriesController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex($section = null, $count = 20)
+    public function actionEntries($section = null, $count = 20)
     {
 		$result = Seeder::$plugin->entries->generate($section, $count);
 
         return $result;
     }
+
+	/**
+	 * Generates categories
+	 *
+	 * The first line of this method docblock is displayed as the description
+	 * of the Console Command in ./craft help
+	 *
+	 * @return mixed
+	 */
+	public function actionCategoeis($section = null, $count = 20)
+	{
+		$result = Seeder::$plugin->entries->generate($section, $count);
+
+		return $result;
+	}
 }
