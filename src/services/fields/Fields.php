@@ -11,6 +11,7 @@
 namespace studioespresso\seeder\services\fields;
 
 use craft\elements\Asset;
+use craft\elements\MatrixBlock;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Email;
 use craft\fields\Matrix;
@@ -52,21 +53,21 @@ class Fields extends Component  {
 	/**
 	 * @param PlainText $field
 	 */
-	public function PlainText($field) {
+	public function PlainText($field, $entry) {
 		return $this->factory->realText($field->charLimit ? $field->charLimit : 200);
 	}
 
 	/**
 	 * @param Email $field
 	 */
-	public function Email($field) {
+	public function Email($field, $entry) {
 		return $this->factory->email();
 	}
 
 	/**
 	 * @param Url $field
 	 **/
-	public function Url($field) {
+	public function Url($field, $entry) {
 		return $this->factory->url();
 	}
 
@@ -74,7 +75,7 @@ class Fields extends Component  {
 	/**
 	 * @param AssetsField $field
 	 */
-	public function Assets($field) {
+	public function Assets($field, $entry) {
 		$assets = [];
 
 
@@ -87,7 +88,6 @@ class Fields extends Component  {
 		$assetFolder = Craft::$app->assets->getFolderById($folderId);
 
 		for ( $x = 1; $x <= $field->limit; $x ++ ) {
-
 
 			$image = $this->factory->imageUrl(1600,1200);
 			$ch = curl_init();
@@ -115,12 +115,24 @@ class Fields extends Component  {
 	/**
 	 * @param Matrix $field
 	 */
-	public function Matrix($field) {
+	public function Matrix($field, $entry) {
 		/* @var $blockType MatrixBlockType*/
-		foreach($field->getBlockTypes() as $blockType) {
-			$blockTypeLayout = $blockType->fieldLayoutId;
+		$types = $field->getBlockTypes();
+		for ( $x = 1; $x <= $field->maxBlocks; $x ++ ) {
+			$type = array_rand($field->getBlockTypes());
+			$type = $types[$type];
+			$blockTypeFields = Craft::$app->fields->getFieldsByLayoutId($type->fieldLayoutId);
+
+			$matrixBlock = new MatrixBlock();
+			$matrixBlock->typeId = $type->id;
+			$matrixBlock->fieldId = $field->id;
+			$matrixBlock->ownerId = $entry->id;
+
+			$matrixBlock = Seeder::$plugin->entries->populateFields( $blockTypeFields, $matrixBlock );
+			Craft::$app->elements->saveElement($matrixBlock);
 
 		}
+		return;
 	}
 
 	private function uploadNewAsset($folderId, $path) {

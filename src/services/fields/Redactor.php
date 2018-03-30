@@ -33,7 +33,7 @@ class Redactor extends Component  {
 		$this->factory = Factory::create();
 	}
 
-	public function Field($field) {
+	public function Field($field, $entry) {
 		return Lorem::sentences(rand(5, 20), true);
 	}
 

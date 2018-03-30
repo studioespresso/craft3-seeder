@@ -58,9 +58,12 @@ class Entries extends Component {
 					'typeId'    => $entryType->id,
 					'title'     => Seeder::$plugin->fields->Title(),
 				] );
-
-				$entry = $this->populateFields( $typeFields, $entry );
 				Craft::$app->getElements()->saveElement( $entry );
+				$entry = $this->populateFields( $typeFields, $entry );
+
+				Craft::$app->getElements()->saveElement( $entry );
+				$entry->id;
+
 				$this->saveSeededEntry($entry);
 
 			}
@@ -91,15 +94,15 @@ class Entries extends Component {
 	 * @param $fields
 	 * @param Entry $entry
 	 */
-	private function populateFields( $fields, $entry ) {
+	public function populateFields( $fields, $entry ) {
 		$entryFields = [];
 		foreach ( $fields as $field ) {
 			try {
 				$fieldData = $this->isFieldSupported( $field );
 				if ( $fieldData ) {
-					$fieldProdider                   = $fieldData[0];
+					$fieldProvider                   = $fieldData[0];
 					$fieldType                       = $fieldData[1];
-					$entryFields[ $field['handle'] ] = Seeder::$plugin->$fieldProdider->$fieldType( $field );
+					$entryFields[ $field['handle'] ] = Seeder::$plugin->$fieldProvider->$fieldType( $field, $entry );
 				}
 
 			} catch ( FieldNotFoundException $e ) {
