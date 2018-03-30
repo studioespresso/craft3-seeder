@@ -40,7 +40,8 @@
             "categories": "studioespresso\\seeder\\services\\Categories",
             "fields": "studioespresso\\seeder\\services\\fields\\Fields",
             "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
-            "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor"
+            "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor",
+            "supertable": "studioespresso\\seeder\\services\\fields\\Supertable"
         },
         "changelogUrl": "https://raw.githubusercontent.com/studioespresso/seeder/master/CHANGELOG.md",
         "class": "studioespresso\\seeder\\Seeder"

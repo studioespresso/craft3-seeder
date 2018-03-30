@@ -16,6 +16,7 @@ use studioespresso\seeder\services\Categories as CategoriesService;
 use studioespresso\seeder\services\fields\Fields as FieldsService;
 use studioespresso\seeder\services\fields\Redactor as RedactorService;
 use studioespresso\seeder\services\fields\CkEditor as CkEditorService;
+use studioespresso\seeder\services\fields\Supertable as SupertableService;
 
 use Craft;
 use craft\base\Plugin;
@@ -45,6 +46,7 @@ use yii\base\Event;
  * @property  FieldsService fields
  * @property  RedactorService redactor
  * @property  CkEditorService ckeditor
+ * @property  SupertableService supertable
  * @property  Settings $settings
  * @method    Settings getSettings()
  */
