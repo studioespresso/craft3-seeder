@@ -97,7 +97,6 @@ class Entries extends Component {
 	public function populateFields( $fields, $entry ) {
 		$entryFields = [];
 		foreach ( $fields as $field ) {
-			d($field);
 			try {
 				$fieldData = $this->isFieldSupported( $field );
 				if ( $fieldData ) {

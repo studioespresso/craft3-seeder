@@ -118,7 +118,7 @@ class Fields extends Component  {
 	public function Matrix($field, $entry) {
 		/* @var $blockType MatrixBlockType*/
 		$types = $field->getBlockTypes();
-		$blockCount = rand($field->minBlocks, isset($field->maxBlocks) ? $field->maxBlocks : 15);
+		$blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
 		$blockIds = [];
 		$types = array_map(function($type) {
 			return  $type->id;
