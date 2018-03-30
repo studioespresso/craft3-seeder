@@ -118,16 +118,22 @@ class Fields extends Component  {
 	public function Matrix($field, $entry) {
 		/* @var $blockType MatrixBlockType*/
 		$types = $field->getBlockTypes();
-		for ( $x = 1; $x <= $field->maxBlocks; $x ++ ) {
-			$type = array_rand($field->getBlockTypes());
-			$type = $types[$type];
-			$blockTypeFields = Craft::$app->fields->getFieldsByLayoutId($type->fieldLayoutId);
+		$blockCount = rand($field->minBlocks, isset($field->maxBlocks) ? $field->maxBlocks : 15);
+		$blockIds = [];
+		$types = array_map(function($type) {
+			return  $type->id;
+		}, $types);
 
+		for ( $x = 1; $x <= $blockCount; $x ++ ) {
+			$blockIds[] =  $types[array_rand($types, 1)];
+		}
+		foreach($blockIds as $blockId) {
+			$type = Craft::$app->matrix->getBlockTypeById($blockId);
+			$blockTypeFields = Craft::$app->fields->getFieldsByLayoutId($type->fieldLayoutId);
 			$matrixBlock = new MatrixBlock();
 			$matrixBlock->typeId = $type->id;
 			$matrixBlock->fieldId = $field->id;
 			$matrixBlock->ownerId = $entry->id;
-
 			$matrixBlock = Seeder::$plugin->entries->populateFields( $blockTypeFields, $matrixBlock );
 			Craft::$app->elements->saveElement($matrixBlock);
 
@@ -136,10 +142,7 @@ class Fields extends Component  {
 	}
 
 	private function uploadNewAsset($folderId, $path) {
-
-
 		$assets = Craft::$app->getAssets();
-
 		$folder = $assets->findFolder(['id' => $folderId]);
 
 		if (!$folder) {
