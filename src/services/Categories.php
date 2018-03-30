@@ -11,6 +11,7 @@
 namespace studioespresso\seeder\services;
 
 use craft\elements\Asset;
+use craft\elements\Category;
 use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
@@ -47,85 +48,17 @@ class Categories extends Component {
 	 */
 	public function generate( $groupId = null, $count ) {
 		$faker = Factory::create();
+		$categoryGroup = Craft::$app->categories->getGroupById((int) $groupId);
 
-		$section = Craft::$app->sections->getSectionById( (int) $sectionId );
+		
+		for ( $x = 1; $x <= $count; $x ++ ) {
+			$category      = new Category( [
+				'groupId' => (int) $groupId,
+				'title'     => Seeder::$plugin->fields->Title(20),
+			] );
 
-		foreach ( $section->getEntryTypes() as $entryType ) {
-			for ( $x = 1; $x <= $count; $x ++ ) {
-				$typeFields = Craft::$app->fields->getFieldsByLayoutId( $entryType->getFieldLayoutId() );
-				$entry      = new Entry( [
-					'sectionId' => (int) $sectionId,
-					'typeId'    => $entryType->id,
-					'title'     => Seeder::$plugin->fields->Title(),
-				] );
-
-				$entry = $this->populateFields( $typeFields, $entry );
-				Craft::$app->getElements()->saveElement( $entry );
-				$this->saveSeededEntry($entry);
-
-			}
+			Craft::$app->getElements()->saveElement( $category );
 		}
 
 	}
-
-	/**
-	 * @param Entry $entry
-	 */
-	public function saveSeededEntry($entry) {
-		$record          = new SeederEntryRecord();
-		$record->entryId = $entry->id;
-		$record->section = $entry->sectionId;
-		$record->save();
-	}
-
-	/**
-	 * @param Asset $asset
-	 */
-	public function saveSeededAsset($asset) {
-		$record = new SeederAssetRecord();
-		$record->assetId = $asset->id;
-		$record->save();
-	}
-
-	/**
-	 * @param $fields
-	 * @param Entry $entry
-	 */
-	private function populateFields( $fields, $entry ) {
-		$entryFields = [];
-		foreach ( $fields as $field ) {
-			try {
-				$fieldData = $this->isFieldSupported( $field );
-				if ( $fieldData ) {
-					$fieldProdider                   = $fieldData[0];
-					$fieldType                       = $fieldData[1];
-					$entryFields[ $field['handle'] ] = Seeder::$plugin->$fieldProdider->$fieldType( $field );
-				}
-
-			} catch ( FieldNotFoundException $e ) {
-				dd($e);
-			}
-		}
-		$entry->setFieldValues( $entryFields );
-
-		return $entry;
-
-	}
-
-	private function isFieldSupported( $field ) {
-		$fieldType     = explode( '\\', get_class( $field ) );
-		$fieldProvider = $fieldType[1];
-		$fieldType     = $fieldType[2];
-
-		if ( class_exists( 'studioespresso\\seeder\\services\\fields\\' . $fieldProvider ) ) {
-			if ( in_array( $fieldType, get_class_methods( Seeder::$plugin->$fieldProvider ) ) ) {
-				return [ $fieldProvider, $fieldType ];
-			} else {
-				throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
-			}
-		} else {
-			throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldProvider );
-		}
-	}
-
 }

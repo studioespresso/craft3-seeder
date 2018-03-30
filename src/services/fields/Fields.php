@@ -23,6 +23,7 @@ use craft\services\Path;
 use craft\models\MatrixBlockType;
 use craft\web\UploadedFile;
 use Faker\Factory;
+use Faker\Provider\Text;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -44,8 +45,8 @@ class Fields extends Component  {
 
 	}
 
-	public function Title() {
-		$title = $this->factory->realText(rand(15, 40));
+	public function Title($maxLength = 40) {
+		$title = $this->factory->text(rand(8, $maxLength));
 		$title = substr($title, 0, strlen($title) - 1);
 		return $title;
 	}
@@ -116,7 +117,6 @@ class Fields extends Component  {
 	 * @param Matrix $field
 	 */
 	public function Matrix($field, $entry) {
-		/* @var $blockType MatrixBlockType*/
 		$types = $field->getBlockTypes();
 		$blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
 		$blockIds = [];
