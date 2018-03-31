@@ -17,6 +17,7 @@ use studioespresso\seeder\Seeder;
 
 use Craft;
 use craft\base\Component;
+use verbb\supertable\elements\SuperTableBlockElement;
 use verbb\supertable\fields\SuperTableField;
 
 /**
@@ -41,6 +42,14 @@ class Supertable extends Component  {
 	 * @return array|string
 	 */
 	public function SuperTableField($field, $entry) {
+		$blockTypeFields = $field->getBlockTypeFields();
+		$superTableBlock = new SuperTableBlockElement();
+		$superTableBlock->ownerId = $entry->id;
+		$superTableBlock->fieldId = $field->id;
+		$superTableBlock->typeId = $field->getBlockTypes()[0]->id;
+		$superTableBlock = Seeder::$plugin->entries->populateFields( $blockTypeFields, $superTableBlock );
+		Craft::$app->elements->saveElement($superTableBlock);
+
 	}
 
 }
