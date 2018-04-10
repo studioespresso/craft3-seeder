@@ -34,7 +34,7 @@
         "name": "Seeder",
         "handle": "seeder",
         "hasCpSettings": false,
-        "hasCpSection": false,
+        "hasCpSection": true,
         "components": {
             "entries": "studioespresso\\seeder\\services\\Entries",
             "categories": "studioespresso\\seeder\\services\\Categories",
