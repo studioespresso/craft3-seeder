@@ -36,7 +36,7 @@
             {% for section in data.sections %}
                 <div class="checkbox-select">
                     <input type="checkbox" value="{{ section.id }}" class="all checkbox" id="{{ section.name }}"
-                           name="data[sections][]" >
+                           name="data[sections][]" checked="checked" >
                     <label for="{{ section.name }}"><b>{{ section.name }} ({{ section.count }})</b></label>
                 </div>
             {% endfor %}
@@ -45,7 +45,7 @@
         {% if data.assets is defined %}
             <h2>{{ 'Other'|t }}</h2>
             <div class="checkbox-select">
-                <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="">
+                <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="" checked="checked">
                 <label for="assets"><b>{{ 'Assets'|t }} ({{ data.   assets.count }})</b></label>
             </div>
         {% endif %}
