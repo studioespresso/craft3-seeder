@@ -1,8 +1,11 @@
 # Seeder plugin for Craft CMS 3.x
 
-Easy entries seeder for Craft CMS
+![Seeder](/resources/banner.png?raw=true)
 
 ### Usage
+
+Seeder allows you to quickly create dummy entries through the command line. And you can just as easily remove the dummy data when you're done building the site.
+With the plugin installed, running `./craft help seeder/generate` will show you which commands are available
 
 #### Entries
 

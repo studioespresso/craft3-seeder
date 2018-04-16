@@ -18,25 +18,9 @@ use yii\console\Controller;
 use yii\helpers\Console;
 
 /**
- * Default Command
+ * Welcome to the Seeder plugin overview
  *
- * The first line of this class docblock is displayed as the description
- * of the Console Command in ./craft help
- *
- * Craft can be invoked via commandline console by using the `./craft` command
- * from the project root.
- *
- * Console Commands are just controllers that are invoked to handle console
- * actions. The segment routing is plugin-name/controller-name/action-name
- *
- * The actionIndex() method is what is executed if no sub-commands are supplied, e.g.:
- *
- * ./craft seeder/default
- *
- * Actions must be in 'kebab-case' so actionDoSomething() maps to 'do-something',
- * and would be invoked via:
- *
- * ./craft seeder/default/do-something
+ * This plugin allows you to quickly create dummy or test data that you can use while building your site.
  *
  * @author    Studio Espresso
  * @package   Seeder
@@ -63,7 +47,7 @@ class GenerateController extends Controller
     }
 
 	/**
-	 * Generates categories
+	 * Generates categories for the specified group
 	 *
 	 * The first line of this method docblock is displayed as the description
 	 * of the Console Command in ./craft help
