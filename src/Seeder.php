@@ -77,14 +77,13 @@ class Seeder extends Plugin
     // =========================================================================
 
     public function init() {
-	    parent::init();
 	    self::$plugin = $this;
 
 	    Event::on(
 		    UrlManager::class,
-		    UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+		    UrlManager::EVENT_REGISTER_CP_URL_RULES,
 		    function (RegisterUrlRulesEvent $event) {
-			    $event->rules['seeder'] = 'seeder/default';
+			    $event->rules['seeder'] = 'seeder/seeder/index';
 		    }
 	    );
 
@@ -92,6 +91,7 @@ class Seeder extends Plugin
 	    if ( Craft::$app instanceof ConsoleApplication ) {
 		    $this->controllerNamespace = 'studioespresso\seeder\console\controllers';
 	    }
+	    parent::init();
     }
 
     // Protected Methods

@@ -1,0 +1,55 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Seeder plugin for Craft CMS 3.x
+ *
+ * Seeder index.twig
+ *
+ * @author    studioespresso
+ * @copyright Copyright (c) 2018 studioespresso
+ * @link      https://studioespresso.co
+ * @package   Seeder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set docsUrl = "https://github.com/studioespressoco/seeder/blob/master/README.md" %}
+
+{% set title = "Seeder" %}
+
+{% set pluginCpUrl = url('seeder') %}
+
+{% set content %}
+    <form method="post" action="{{ actionUrl('seeder/seeder/clean') }}">
+        {% if data|length %}
+        {{ csrfInput() }}
+        {{ redirectInput('seeder') }}
+        Select the seeded entries you want to remove
+
+
+        {% if data.sections is defined %}
+            <h2>{{ 'Entries' }}</h2>
+
+            {% for section in data.sections %}
+                <div class="checkbox-select">
+                    <input type="checkbox" value="{{ section.id }}" class="all checkbox" id="{{ section.name }}"
+                           name="data[sections][]" checked="">
+                    <label for="{{ section.name }}"><b>{{ section.name }} ({{ section.count }})</b></label>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+        {% if data.assets is defined %}
+            <h2>{{ 'Other'|t }}</h2>
+            <input type="checkbox" name="data[assets][]" value=""> {{ 'Assets'|t }} ({{ assets.count }})<br>
+        {% endif %}
+        <hr>
+        <input type="submit" class="btn submit" value="Clean">
+        {% else %}
+            You don't have any seeded entries at the moment.
+        {% endif %}
+    </form>
+{% endset %}

@@ -90,7 +90,7 @@ class Fields extends Component  {
 
 		for ( $x = 1; $x <= $field->limit; $x ++ ) {
 
-			$image = $this->factory->imageUrl(1600,1200);
+			$image = $this->factory->imageUrl(2500,2000);
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $image);
 			curl_setopt($ch, CURLOPT_HEADER, 0);
