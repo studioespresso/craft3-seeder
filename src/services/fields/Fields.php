@@ -11,8 +11,10 @@
 namespace studioespresso\seeder\services\fields;
 
 use craft\elements\Asset;
+use craft\elements\Category;
 use craft\elements\MatrixBlock;
 use craft\fields\Assets as AssetsField;
+use craft\fields\Categories;
 use craft\fields\Email;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
@@ -80,6 +82,23 @@ class Fields extends Component  {
 	public function Date($field, $entry) {
 		return $this->factory->dateTime();
 
+	}
+
+	/**
+	 * @param Categories $field
+	 * @param $entry
+	 */
+	public function Categories($field, $entry) {
+		$catGroup = Craft::$app->getCategories()->getGroupById($field->groupId);
+		$cats = Category::find()
+			->groupId($field->groupId)
+			->ids();
+
+		$categories = [];
+		for ( $x = 1; $x <= $field->branchLimit; $x ++ ) {
+			$categories[] = $cats[array_rand($cats)];
+		}
+		return $categories;
 	}
 
 
