@@ -78,7 +78,6 @@ class SeederController extends Controller
 				}
 			}
 		}
-		exit;
 		return $this->redirectToPostedUrl();
     }
 

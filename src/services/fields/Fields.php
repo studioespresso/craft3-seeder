@@ -72,6 +72,16 @@ class Fields extends Component  {
 		return $this->factory->url();
 	}
 
+	public function Color($field, $entry) {
+		return $this->factory->safeHexColor;
+
+	}
+
+	public function Date($field, $entry) {
+		return $this->factory->dateTime();
+
+	}
+
 
 	/**
 	 * @param AssetsField $field
