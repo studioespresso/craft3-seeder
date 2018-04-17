@@ -21,6 +21,7 @@ use craft\fields\Dropdown;
 use craft\fields\Email;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
+use craft\fields\RadioButtons;
 use craft\fields\Url;
 use craft\helpers\Assets;
 use craft\models\VolumeFolder;
@@ -124,6 +125,14 @@ class Fields extends Component  {
 			$checkedBoxes[] = $field->options[array_rand($field->options)]['value'];
 		}
 		return $checkedBoxes;
+	}
+
+	/**
+	 * @param RadioButtons $field
+	 * @param Entry $entry
+	 */
+	public function RadioButtons($field, $entry) {
+		return $field->options[array_rand($field->options)]['value'];
 	}
 
 
