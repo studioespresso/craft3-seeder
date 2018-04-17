@@ -34,3 +34,8 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 - [x] Lightswitch
 - [ ] Tags
 - [ ] Users
+
+#### Plugin fields
+- [x] [Redactor](https://github.com/craftcms/redactor)
+- [x] [CKEditor](https://github.com/craftcms/ckeditor)
+- [ ] [Super Table](https://github.com/verbb/super-table)
