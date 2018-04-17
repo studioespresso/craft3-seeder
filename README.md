@@ -31,6 +31,6 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 - [x] Multi select
 - [x] Assets
 - [x] Matrix
-- [ ] Lightswitch
+- [x] Lightswitch
 - [ ] Tags
 - [ ] Users

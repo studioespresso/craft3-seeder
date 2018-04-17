@@ -19,6 +19,7 @@ use craft\fields\Categories;
 use craft\fields\Checkboxes;
 use craft\fields\Dropdown;
 use craft\fields\Email;
+use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
 use craft\fields\PlainText;
@@ -146,6 +147,14 @@ class Fields extends Component  {
 			$options[] = $field->options[array_rand($field->options)]['value'];
 		}
 		return $options;
+	}
+
+	/**
+	 * @param Lightswitch $field
+	 * @param Entry $entry
+	 */
+	public function Lightswitch($field, $entry) {
+		return $this->factory->boolean;
 	}
 
 	/**
