@@ -20,6 +20,7 @@ use craft\fields\Checkboxes;
 use craft\fields\Dropdown;
 use craft\fields\Email;
 use craft\fields\Matrix;
+use craft\fields\MultiSelect;
 use craft\fields\PlainText;
 use craft\fields\RadioButtons;
 use craft\fields\Url;
@@ -135,6 +136,17 @@ class Fields extends Component  {
 		return $field->options[array_rand($field->options)]['value'];
 	}
 
+	/**
+	 * @param MultiSelect $field
+	 * @param Entry $entry
+	 */
+	public function MultiSelect($field, $entry) {
+		$options = [];
+		for ( $x = 1; $x <= rand(1, count($field->options)); $x ++ ) {
+			$options[] = $field->options[array_rand($field->options)]['value'];
+		}
+		return $options;
+	}
 
 	/**
 	 * @param AssetsField $field
