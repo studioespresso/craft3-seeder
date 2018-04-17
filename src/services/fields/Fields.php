@@ -12,9 +12,11 @@ namespace studioespresso\seeder\services\fields;
 
 use craft\elements\Asset;
 use craft\elements\Category;
+use craft\elements\Entry;
 use craft\elements\MatrixBlock;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Categories;
+use craft\fields\Checkboxes;
 use craft\fields\Dropdown;
 use craft\fields\Email;
 use craft\fields\Matrix;
@@ -56,6 +58,7 @@ class Fields extends Component  {
 
 	/**
 	 * @param PlainText $field
+	 * @param Entry $entry
 	 */
 	public function PlainText($field, $entry) {
 		return $this->factory->realText($field->charLimit ? $field->charLimit : 200);
@@ -87,7 +90,7 @@ class Fields extends Component  {
 
 	/**
 	 * @param Categories $field
-	 * @param $entry
+	 * @param Entry $entry
 	 */
 	public function Categories($field, $entry) {
 		$catGroup = Craft::$app->getCategories()->getGroupById($field->groupId);
@@ -104,10 +107,23 @@ class Fields extends Component  {
 
 	/**
 	 * @param Dropdown $field
-	 * @param $entry
+	 * @param Entry $entry
+	 *
 	 */
 	public function Dropdown($field, $entry) {
 		return $field->options[array_rand($field->options)]['value'];
+	}
+
+	/**
+	 * @param Checkboxes $field
+	 * @param Entry $entry
+	 */
+	public function Checkboxes($field, $entry) {
+		$checkedBoxes = [];
+		for ( $x = 1; $x <= rand(1, count($field->options)); $x ++ ) {
+			$checkedBoxes[] = $field->options[array_rand($field->options)]['value'];
+		}
+		return $checkedBoxes;
 	}
 
 
