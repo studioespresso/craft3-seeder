@@ -15,6 +15,7 @@ use craft\elements\Category;
 use craft\elements\MatrixBlock;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Categories;
+use craft\fields\Dropdown;
 use craft\fields\Email;
 use craft\fields\Matrix;
 use craft\fields\PlainText;
@@ -99,6 +100,14 @@ class Fields extends Component  {
 			$categories[] = $cats[array_rand($cats)];
 		}
 		return $categories;
+	}
+
+	/**
+	 * @param Dropdown $field
+	 * @param $entry
+	 */
+	public function Dropdown($field, $entry) {
+		return $field->options[array_rand($field->options)]['value'];
 	}
 
 
