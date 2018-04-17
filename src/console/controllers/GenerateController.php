@@ -18,7 +18,7 @@ use yii\console\Controller;
 use yii\helpers\Console;
 
 /**
- * Welcome to the Seeder plugin overview
+ * Seeder plugin
  *
  * This plugin allows you to quickly create dummy or test data that you can use while building your site.
  *
