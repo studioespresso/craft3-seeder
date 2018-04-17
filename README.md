@@ -15,3 +15,22 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 ./craft seeder/generate/entries 
 ```
 
+### Roadmap
+
+#### Core fields
+- [x] Title
+- [x] Plain text
+- [x] Email
+- [x] Url
+- [x] Color
+- [x] Date
+- [x] Categories
+- [x] Dropdown
+- [x] Checkboxes
+- [x] Radio buttons
+- [x] Multi select
+- [x] Assets
+- [x] Matrix
+- [ ] Lightswitch
+- [ ] Tags
+- [ ] Users
