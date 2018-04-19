@@ -24,6 +24,7 @@ use craft\fields\Matrix;
 use craft\fields\MultiSelect;
 use craft\fields\PlainText;
 use craft\fields\RadioButtons;
+use craft\fields\Table;
 use craft\fields\Url;
 use craft\helpers\Assets;
 use craft\models\VolumeFolder;
@@ -155,6 +156,45 @@ class Fields extends Component  {
 	 */
 	public function Lightswitch($field, $entry) {
 		return $this->factory->boolean;
+	}
+
+	/**
+	 * @param Table $field
+	 * @param Entry $entry
+	 */
+	public function Table($field, $entry) {
+		$table = [];
+		for ( $x = 0; $x <= rand($field->minRows-1, $field->maxRows-1); $x ++ ) {
+			foreach($field->columns as $handle => $col) {
+				switch ($col['type']) {
+					case "singleline":
+						$table[$x][$handle] = $this->factory->text(30);
+						break;
+					case "multiline":
+						$table[$x][$handle] = $this->factory->realText(150, rand(2, 5));
+						break;
+					case "lightswitch":
+						$table[$x][$handle] = $this->factory->boolean;
+						break;
+					case "number":
+						$table[$x][$handle] = $this->factory->numberBetween(2, 30);
+						break;
+					case "checkbox":
+						$table[$x][$handle] = $this->factory->boolean;
+						break;
+					case "date":
+						$table[$x][$handle] = $this->factory->date();
+						break;
+					case "time":
+						$table[$x][$handle] = $this->factory->time();
+						break;
+					case "color":
+						$table[$x][$handle] = $this->factory->hexColor;
+						break;
+				}
+			}
+		}
+		return $table;
 	}
 
 	/**
