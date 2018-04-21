@@ -14,6 +14,7 @@ use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\MatrixBlock;
+use craft\elements\Tag;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Categories;
 use craft\fields\Checkboxes;
@@ -25,6 +26,7 @@ use craft\fields\MultiSelect;
 use craft\fields\PlainText;
 use craft\fields\RadioButtons;
 use craft\fields\Table;
+use craft\fields\Tags;
 use craft\fields\Url;
 use craft\helpers\Assets;
 use craft\models\VolumeFolder;
@@ -195,6 +197,23 @@ class Fields extends Component  {
 			}
 		}
 		return $table;
+	}
+
+	/**
+	 * @param Tags $field
+	 * @param Entry $entry
+	 */
+	public function Tags($field, $entry) {
+		$tags = [];
+		for ( $x = 0; $x <= rand(1, 5); $x ++ ) {
+			$tag = new Tag();
+			$tag->groupId = $field->groupId;
+			$tag->title = $this->title();
+			Craft::$app->elements->saveElement($tag);
+			$tags[] = $tag->id;
+		}
+		return $tags;
+
 	}
 
 	/**

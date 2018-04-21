@@ -32,7 +32,8 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 - [x] Assets
 - [x] Matrix
 - [x] Lightswitch
-- [ ] Tags
+- [x] Table
+- [x] Tags
 - [ ] Users
 
 #### Plugin fields
