@@ -183,10 +183,10 @@ class Fields extends Component  {
 						$table[$x][$handle] = $this->factory->boolean;
 						break;
 					case "date":
-						$table[$x][$handle] = $this->factory->date();
+						$table[$x][$handle] = $this->factory->dateTime;
 						break;
 					case "time":
-						$table[$x][$handle] = $this->factory->time();
+						$table[$x][$handle] = $this->factory->dateTime;
 						break;
 					case "color":
 						$table[$x][$handle] = $this->factory->hexColor;
