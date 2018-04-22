@@ -60,4 +60,21 @@ class GenerateController extends Controller
 
 		return $result;
 	}
+
+    /**
+     * Generates categories for the specified group
+     *
+     * The first line of this method docblock is displayed as the description
+     * of the Console Command in ./craft help
+     *
+     * @return mixed
+     */
+    public function actionUsers($group = null, $count = 5)
+    {
+        if (Craft::$app->getEdition() != Craft::Pro) {
+            echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel";
+        }
+        $result = Seeder::$plugin->users->generate($group, $count);
+        return $result;
+    }
 }
