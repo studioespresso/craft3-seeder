@@ -73,6 +73,7 @@ class GenerateController extends Controller
     {
         if (Craft::$app->getEdition() != Craft::Pro) {
             echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel";
+            exit();
         }
         $result = Seeder::$plugin->users->generate($group, $count);
         return $result;

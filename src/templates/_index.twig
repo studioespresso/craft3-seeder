@@ -42,11 +42,17 @@
             {% endfor %}
 
         {% endif %}
-        {% if data.assets is defined %}
+        {% if data.assets is defined or data.users is defined %}
             <h2>{{ 'Other'|t }}</h2>
             <div class="checkbox-select">
+                {% if data.assets is defined %}
                 <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="" checked="checked">
-                <label for="assets"><b>{{ 'Assets'|t }} ({{ data.   assets.count }})</b></label>
+                <label for="assets"><b>{{ 'Assets'|t }} ({{ data.assets.count }})</b></label>
+                {% endif %}
+                {% if data.users is defined %}
+                    <input type="checkbox" id="users" name="data[users][]" class="all checkbox" value="" checked="checked">
+                    <label for="users"><b>{{ 'Users'|t }} ({{ data.users.count }})</b></label>
+                {% endif %}
             </div>
         {% endif %}
         <hr>

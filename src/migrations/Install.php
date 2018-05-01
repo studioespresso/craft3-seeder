@@ -6,6 +6,7 @@ use Craft;
 use craft\db\Migration;
 use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
+use studioespresso\seeder\records\SeederUserRecord;
 use yii\db\Schema;
 
 /**
@@ -40,6 +41,16 @@ class Install extends Migration
 			'uid'         => $this->uid()->notNull(),
 		] );
 
+        $this->createTable(
+            SeederUserRecord::$tableName, [
+            'id' => $this->primaryKey(),
+            'userId' => $this->integer()->notNull(),
+
+            'dateCreated' => $this->dateTime()->notNull(),
+            'dateUpdated' => $this->dateTime()->notNull(),
+            'uid'         => $this->uid()->notNull(),
+        ] );
+
 	}
 
 	/**
@@ -49,5 +60,6 @@ class Install extends Migration
 	{
 		$this->dropTable(SeederEntryRecord::$tableName);
 		$this->dropTable(SeederAssetRecord::$tableName);
+		$this->dropTable(SeederUserRecord::$tableName);
 	}
 }

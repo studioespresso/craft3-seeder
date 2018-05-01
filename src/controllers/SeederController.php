@@ -13,6 +13,7 @@ namespace studioespresso\seeder\controllers;
 use studioespresso\seeder\models\SeederEntryModel;
 use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
+use studioespresso\seeder\records\SeederUserRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -51,6 +52,11 @@ class SeederController extends Controller
         	$data['assets']['count'] = $seededAssets->count();
         }
 
+        $seededUsers = SeederUserRecord::find();
+        if($seededUsers->count()) {
+            $data['users']['count'] = $seededUsers->count();
+        }
+
 
         return $this->renderTemplate('seeder/_index', [ 'data' => $data]);
     }
@@ -77,6 +83,13 @@ class SeederController extends Controller
 					SeederAssetRecord::deleteAll(['assetId' => $asset->assetId]);
 				}
 			}
+            if(!empty($data['users'])) {
+                $seededUsers = SeederUserRecord::find();
+                foreach($seededUsers->all() as $user) {
+                    Craft::$app->elements->deleteElementById($user->userId);
+                    SeederUserRecord::deleteAll(['userId' => $user->userId]);
+                }
+            }
 		}
 		return $this->redirectToPostedUrl();
     }

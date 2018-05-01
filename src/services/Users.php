@@ -19,6 +19,7 @@ use Faker\Factory;
 use Faker\Provider\Person;
 use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
+use studioespresso\seeder\records\SeederUserRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -50,8 +51,11 @@ class Users extends Component {
 	public function generate( $groupId = null, $count ) {
 		$faker = Factory::create();
 		$userGroup = Craft::$app->userGroups->getGroupById($groupId);
+		if(!$userGroup) {
+		    echo "Usergroup not found";
+		    exit();
+        }
 		for ( $x = 1; $x <= $count; $x ++ ) {
-		    d('hier');
 		    $user = new User();
 		    $user->passwordResetRequired = true;
 		    $user->email = $faker->email;
@@ -59,8 +63,18 @@ class Users extends Component {
 		    $user->firstName = $faker->firstName;
 		    $user->lastName = $faker->lastName;
 		    Craft::$app->elements->saveElement($user);
+		    $this->saveSeededUser($user);
 		    Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
 		}
 
 	}
+
+    /**
+     * @param User $user
+     */
+    public function saveSeededUser($user) {
+        $record = new SeederUserRecord();
+        $record->userId = $user->id;
+        $record->save();
+    }
 }
