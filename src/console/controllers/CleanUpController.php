@@ -12,6 +12,7 @@ namespace studioespresso\seeder\console\controllers;
 
 use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
+use studioespresso\seeder\records\SeederUserRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -54,6 +55,12 @@ class CleanUpController extends Controller
 		    Craft::$app->elements->deleteElementById($asset->assetId);
 		    SeederAssetRecord::deleteAll(['assetId' => $asset->assetId]);
 	    }
+
+        $seededUsers = SeederUserRecord::find();
+        foreach($seededUsers->all() as $user) {
+            Craft::$app->elements->deleteElementById($user->userId);
+            SeederUserRecord::deleteAll(['userId' => $user->userId]);
+        }
 
     }
 
