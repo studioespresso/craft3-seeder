@@ -109,19 +109,4 @@ class Seeder extends Plugin
         return new Settings();
     }
 
-    /**
-     * Returns the rendered settings HTML, which will be inserted into the content
-     * block on the settings page.
-     *
-     * @return string The rendered settings HTML
-     */
-    protected function settingsHtml(): string
-    {
-        return Craft::$app->view->renderTemplate(
-            'seeder/settings',
-            [
-                'settings' => $this->getSettings()
-            ]
-        );
-    }
 }

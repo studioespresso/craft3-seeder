@@ -72,10 +72,35 @@ class GenerateController extends Controller
     public function actionUsers($group = null, $count = 5)
     {
         if (Craft::$app->getEdition() != Craft::Pro) {
-            echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel";
-            exit();
+            echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel\n";
+            return;
         }
         $result = Seeder::$plugin->users->generate($group, $count);
         return $result;
+    }
+
+    public function actionSet($name = 'default') {
+        if(!array_key_exists($name, Seeder::$plugin->getSettings()->sets)) {
+            echo "Set not found\n";
+            return;
+        }
+        $settings = Seeder::$plugin->getSettings()->sets[$name];
+        foreach($settings as $type => $option) {
+            d($type, $option);
+            switch ($type) {
+                case 'Users':
+                    break;
+                case 'Entries':
+                    if(is_array($option)) {
+                        foreach ($option as $section => $count) {
+                            $result = Seeder::$plugin->entries->generate($section, $count);
+                            if($result) {
+                                echo "Seeded " . $count . " entries in " . $result . "\n";
+                            }
+                        }
+                    }
+                break;
+            }
+        }
     }
 }

@@ -68,6 +68,7 @@ class Entries extends Component {
 
 			}
 		}
+		return $section->name;
 
 	}
 
