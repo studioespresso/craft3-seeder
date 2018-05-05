@@ -11,8 +11,8 @@
         "seeder"
     ],
     "support": {
-        "docs": "https://github.com/studioespresso/seeder/blob/master/README.md",
-        "issues": "https://github.com/studioespresso/seeder/issues"
+        "docs": "https://github.com/studioespresso/craft3-seeder/blob/master/README.md",
+        "issues": "https://github.com/studioespresso/craft3-seeder/issues"
     },
     "license": "MIT",
     "authors": [
