@@ -18,9 +18,10 @@ use yii\console\Controller;
 use yii\helpers\Console;
 
 /**
- * Seeder plugin
+ * Seeder for Craft CMS 3.x - by Studio Espresso
  *
- * This plugin allows you to quickly create dummy or test data that you can use while building your site.
+ * This plugin allows you to quickly create dummy data that you can use while building your site.
+ * Issues or feedback: https://github.com/studioespresso/craft3-seeder/issues
  *
  * @author    Studio Espresso
  * @package   Seeder
@@ -39,11 +40,12 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionEntries($section = null, $count = 20)
+    public function actionEntries($sectionId = null, $count = 20)
     {
-		$result = Seeder::$plugin->entries->generate($section, $count);
-
-        return $result;
+        if($sectionId) {
+		    $result = Seeder::$plugin->entries->generate($sectionId, $count);
+            return $result;
+        }
     }
 
 	/**
@@ -54,9 +56,9 @@ class GenerateController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function actionCategories($group = null, $count = 20)
+	public function actionCategories($groupId = null, $count = 20)
 	{
-		$result = Seeder::$plugin->categories->generate($group, $count);
+		$result = Seeder::$plugin->categories->generate($groupId, $count);
 
 		return $result;
 	}
@@ -69,13 +71,13 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionUsers($group = null, $count = 5)
+    public function actionUsers($groupId = null, $count = 5)
     {
         if (Craft::$app->getEdition() != Craft::Pro) {
             echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel\n";
             return;
         }
-        $result = Seeder::$plugin->users->generate($group, $count);
+        $result = Seeder::$plugin->users->generate($groupId, $count);
         return $result;
     }
 
