@@ -12,10 +12,15 @@ With the plugin installed, running `./craft help seeder/generate` will show you 
 Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
 
 ```Shell
-./craft seeder/generate/entries 
+./craft seeder/generate/entries 1 15
 ```
 
 ### Roadmap
+
+#### Core elements
+- [x] Entries
+- [x] Categories
+- [x] Users
 
 #### Core fields
 - [x] Title
@@ -34,7 +39,7 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 - [x] Lightswitch
 - [x] Table
 - [x] Tags
-- [ ] Users
+- [x] Users
 
 #### Plugin fields
 - [x] [Redactor](https://github.com/craftcms/redactor)

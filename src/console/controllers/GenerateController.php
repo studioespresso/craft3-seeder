@@ -62,7 +62,7 @@ class GenerateController extends Controller
 	}
 
     /**
-     * Generates categories for the specified group
+     * Generates users for the specified usergroup
      *
      * The first line of this method docblock is displayed as the description
      * of the Console Command in ./craft help
@@ -79,6 +79,14 @@ class GenerateController extends Controller
         return $result;
     }
 
+    /**
+     * Generates a set of elements predefined in your config/seeder.php
+     *
+     * The first line of this method docblock is displayed as the description
+     * of the Console Command in ./craft help
+     *
+     * @return mixed
+     */
     public function actionSet($name = 'default') {
         if(!array_key_exists($name, Seeder::$plugin->getSettings()->sets)) {
             echo "Set not found\n";
@@ -89,6 +97,14 @@ class GenerateController extends Controller
             d($type, $option);
             switch ($type) {
                 case 'Users':
+                    if(is_array($option)) {
+                        foreach ($option as $group => $count) {
+                            $result = Seeder::$plugin->users->generate($group, $count);
+                            if($result) {
+                                echo "Seeded " . $count . " entries in " . $result . "\n";
+                            }
+                        }
+                    }
                     break;
                 case 'Entries':
                     if(is_array($option)) {
