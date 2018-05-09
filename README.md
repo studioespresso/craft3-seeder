@@ -26,11 +26,11 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 ```
 
 ### Roadmap
+
 #### Core elements
 - [x] Entries
 - [x] Categories
 - [x] Users
-
 - [x] Entry fields
 - [ ] User fields
 - [ ] Category fields
