@@ -125,10 +125,18 @@ class Entries extends Component {
 			if ( in_array( $fieldType, get_class_methods( Seeder::$plugin->$fieldProvider ) ) ) {
 				return [ $fieldProvider, $fieldType ];
 			} else {
-				throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
+			    if(Seeder::$plugin->getSettings()->debug) {
+				    throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
+                } else {
+			        echo "Fieldtype not supported:" . $fieldType . "\n";
+                }
 			}
 		} else {
-			throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldProvider );
+            if(Seeder::$plugin->getSettings()->debug) {
+                throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
+            } else {
+                echo "Fieldtype not supported:" . $fieldType . "\n";
+            }
 		}
 	}
 

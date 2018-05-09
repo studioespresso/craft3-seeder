@@ -43,4 +43,6 @@ class Settings extends Model
 
     public $sets;
 
+    public $debug = false;
+
 }
