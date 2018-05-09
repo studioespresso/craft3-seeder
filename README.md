@@ -7,7 +7,7 @@
 Seeder allows you to quickly create dummy entries through the command line. And you can just as easily remove the dummy data when you're done building the site.
 With the plugin installed, running `./craft help seeder/generate` will show you which commands are available
 
-#### Entries
+#### Entries (Section ID, count)
 
 Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
 
@@ -15,12 +15,26 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 ./craft seeder/generate/entries 1 15
 ```
 
-### Roadmap
+#### Categories (Category group ID, count)
+```Shell
+./craft seeder/generate/categories 1 10
+```
 
+#### Users (Usergroup ID, count)
+```Shell
+./craft seeder/generate/users 1 5
+```
+
+### Roadmap
 #### Core elements
 - [x] Entries
 - [x] Categories
 - [x] Users
+
+- [x] Entry fields
+- [ ] User fields
+- [ ] Category fields
+- [ ] Asset fields 
 
 #### Core fields
 - [x] Title
