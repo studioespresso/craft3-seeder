@@ -2,7 +2,7 @@
 
 ![Seeder](/resources/banner.png?raw=true)
 
-### Usage
+## Usage
 
 Seeder allows you to quickly create dummy entries through the command line. And you can just as easily remove the dummy data when you're done building the site.
 With the plugin installed, running `./craft help seeder/generate` will show you which commands are available
@@ -25,7 +25,14 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 ./craft seeder/generate/users 1 5
 ```
 
-### Roadmap
+## Clean up
+Once you're done building out the site, the plugin gives you an easy way to remove the dummy data (entries, assets, categories and users). This can be done through the CP (click the Seeder section the sidebar) or through the command line.
+
+```Shell
+./craft seeder/clean-up/all
+```
+
+## Roadmap
 
 #### Core elements
 - [x] Entries
