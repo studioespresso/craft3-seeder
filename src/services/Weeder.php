@@ -10,9 +10,11 @@
 
 namespace studioespresso\seeder\services;
 
+use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\User;
 use studioespresso\seeder\records\SeederAssetRecord;
+use studioespresso\seeder\records\SeederCategoryRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 
 use Craft;
@@ -48,6 +50,19 @@ class Weeder extends Component
                 Craft::$app->elements->deleteElement($entry);
             }
             SeederEntryRecord::deleteAll(['entryUid' => $seededEntry->entryUid]);
+        }
+    }
+
+    public function categories() {
+        $seededCategories = SeederCategoryRecord::find();
+        foreach ($seededCategories->all() as $seededCategory) {
+            $category = Category::find()
+                ->uid($seededCategory->categoryUid)
+                ->one();
+            if($category) {
+                Craft::$app->elements->deleteElement($category);
+            }
+            SeederCategoryRecord::deleteAll(['categoryUid' => $seededCategory->categoryUid]);
         }
     }
 

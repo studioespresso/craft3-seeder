@@ -14,6 +14,7 @@ use craft\elements\Entry;
 use craft\elements\User;
 use studioespresso\seeder\models\SeederEntryModel;
 use studioespresso\seeder\records\SeederAssetRecord;
+use studioespresso\seeder\records\SeederCategoryRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\records\SeederUserRecord;
 use studioespresso\seeder\Seeder;
@@ -49,6 +50,11 @@ class SeederController extends Controller
 	        }
         }
 
+        $seededCategories = SeederCategoryRecord::find();
+        if($seededCategories->count()) {
+            $data['categoryGroups']['count'] = $seededCategories->count();
+        }
+
         $seededAssets = SeederAssetRecord::find();
         if($seededAssets->count()) {
         	$data['assets']['count'] = $seededAssets->count();
@@ -71,6 +77,9 @@ class SeederController extends Controller
 					Seeder::$plugin->weeder->entries($sectionId);
 				}
 			}
+            if(!empty($data['categories'])) {
+                Seeder::$plugin->weeder->categories();
+            }
 			if(!empty($data['assets'])) {
 				Seeder::$plugin->weeder->assets();
 			}

@@ -5,6 +5,7 @@ namespace studioespresso\seeder\migrations;
 use Craft;
 use craft\db\Migration;
 use studioespresso\seeder\records\SeederAssetRecord;
+use studioespresso\seeder\records\SeederCategoryRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\records\SeederUserRecord;
 use yii\db\Schema;
@@ -24,6 +25,16 @@ class Install extends Migration
             SeederEntryRecord::$tableName, [
             'id' => $this->primaryKey(),
             'entryUid' => $this->uid()->notNull(),
+            'section' => $this->integer()->notNull(),
+            'dateCreated' => $this->dateTime()->notNull(),
+            'dateUpdated' => $this->dateTime()->notNull(),
+            'uid' => $this->uid()->notNull(),
+        ]);
+
+        $this->createTable(
+            SeederCategoryRecord::$tableName, [
+            'id' => $this->primaryKey(),
+            'categoryUid' => $this->uid()->notNull(),
             'section' => $this->integer()->notNull(),
             'dateCreated' => $this->dateTime()->notNull(),
             'dateUpdated' => $this->dateTime()->notNull(),

@@ -42,9 +42,16 @@
             {% endfor %}
 
         {% endif %}
-        {% if data.assets is defined or data.users is defined %}
+        {% if data.assets is defined or data.users is defined or data.categoryGroups is defined %}
             <h2>{{ 'Other'|t }}</h2>
             <div class="checkbox-select">
+                {% if data.categoryGroups is defined %}
+                        <div class="checkbox-select">
+                            <input type="checkbox" value="categories" class="all checkbox" id="categories"
+                                   name="data[categories]" checked="checked" >
+                            <label for="categories">{{ 'Categories' }} ({{ data.categoryGroups.count }})</label>
+                        </div>
+                {% endif %}
                 {% if data.assets is defined %}
                 <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="" checked="checked">
                 <label for="assets"><b>{{ 'Assets'|t }} ({{ data.assets.count }})</b></label>
