@@ -36,6 +36,7 @@
         "hasCpSettings": false,
         "hasCpSection": true,
         "components": {
+            "weeder": "studioespresso\\seeder\\services\\Weeder",
             "entries": "studioespresso\\seeder\\services\\Entries",
             "categories": "studioespresso\\seeder\\services\\Categories",
             "users": "studioespresso\\seeder\\services\\Users",

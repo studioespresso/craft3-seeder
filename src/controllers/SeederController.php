@@ -68,41 +68,14 @@ class SeederController extends Controller
 		if($data) {
 			if(!empty($data['sections'])) {
 				foreach($data['sections'] as $sectionId) {
-					$seededEntries = SeederEntryRecord::findAll( [
-						'section' => $sectionId
-					] );
-					$section = Craft::$app->sections->getSectionById($sectionId);
-					foreach($seededEntries as $seededEntry) {
-                        $entry = Entry::find()
-                            ->uid($seededEntry->entryUid)
-                            ->section($section->handle)
-                            ->one();
-                        if($entry) {
-                            Craft::$app->elements->deleteElement($entry);
-                        }
-						SeederEntryRecord::deleteAll(['entryUid' => $seededEntry->entryUid]);
-					}
-					Craft::$app->session->setFlash('Entries clean up');
+					Seeder::$plugin->weeder->entries($sectionId);
 				}
 			}
 			if(!empty($data['assets'])) {
-				$seededAssets = SeederAssetRecord::find();
-				foreach($seededAssets->all() as $asset) {
-					Craft::$app->elements->deleteElementById($asset->assetId);
-					SeederAssetRecord::deleteAll(['assetId' => $asset->assetId]);
-				}
+				Seeder::$plugin->weeder->assets();
 			}
             if(!empty($data['users'])) {
-                $seededUsers = SeederUserRecord::find();
-                foreach($seededUsers->all() as $seededUser) {
-                    $user = User::find()
-                        ->uid($seededUser->userUid)
-                        ->one();
-                    if($user) {
-                        Craft::$app->elements->deleteElement($user);
-                    }
-                    SeederUserRecord::deleteAll(['userUid' => $seededUser->userUid]);
-                }
+                Seeder::$plugin->weeder->users();
             }
 		}
 		return $this->redirectToPostedUrl();
