@@ -44,23 +44,18 @@ class CleanUpController extends Controller
      */
     public function actionAll()
     {
-	    $seededEntries = SeederEntryRecord::find();
-	    foreach($seededEntries->all() as $entry) {
-		    Craft::$app->elements->deleteElementById($entry->entryId);
-		    SeederEntryRecord::deleteAll(['entryId' => $entry->entryId]);
-	    }
-
-	    $seededAssets = SeederAssetRecord::find();
-	    foreach($seededAssets->all() as $asset) {
-		    Craft::$app->elements->deleteElementById($asset->assetId);
-		    SeederAssetRecord::deleteAll(['assetId' => $asset->assetId]);
-	    }
-
-        $seededUsers = SeederUserRecord::find();
-        foreach($seededUsers->all() as $user) {
-            Craft::$app->elements->deleteElementById($user->userId);
-            SeederUserRecord::deleteAll(['userId' => $user->userId]);
+        $sections = Craft::$app->getSections();
+        foreach($sections->getAllSections() as $section) {
+            $seededEntries = SeederEntryRecord::findAll( [
+                'section' => $section->id
+            ] );
+            if(count($seededEntries)) {
+                Seeder::$plugin->weeder->entries($section->id);
+            }
         }
+
+	    Seeder::$plugin->weeder->assets();
+	    Seeder::$plugin->weeder->users();
 
     }
 

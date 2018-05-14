@@ -81,6 +81,8 @@ class Seeder extends Plugin
     // =========================================================================
 
     public function init() {
+	    parent::init();
+
 	    self::$plugin = $this;
 
 	    Event::on(
@@ -95,7 +97,6 @@ class Seeder extends Plugin
 	    if ( Craft::$app instanceof ConsoleApplication ) {
 		    $this->controllerNamespace = 'studioespresso\seeder\console\controllers';
 	    }
-	    parent::init();
     }
 
     // Protected Methods
