@@ -11,6 +11,7 @@
 namespace studioespresso\seeder\controllers;
 
 use craft\elements\Entry;
+use craft\elements\User;
 use studioespresso\seeder\models\SeederEntryModel;
 use studioespresso\seeder\records\SeederAssetRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
@@ -76,7 +77,9 @@ class SeederController extends Controller
                             ->uid($seededEntry->entryUid)
                             ->section($section->handle)
                             ->one();
-                        Craft::$app->elements->deleteElement($entry);
+                        if($entry) {
+                            Craft::$app->elements->deleteElement($entry);
+                        }
 						SeederEntryRecord::deleteAll(['entryUid' => $seededEntry->entryUid]);
 					}
 					Craft::$app->session->setFlash('Entries clean up');
@@ -91,9 +94,14 @@ class SeederController extends Controller
 			}
             if(!empty($data['users'])) {
                 $seededUsers = SeederUserRecord::find();
-                foreach($seededUsers->all() as $user) {
-                    Craft::$app->elements->deleteElementById($user->userId);
-                    SeederUserRecord::deleteAll(['userId' => $user->userId]);
+                foreach($seededUsers->all() as $seededUser) {
+                    $user = User::find()
+                        ->uid($seededUser->userUid)
+                        ->one();
+                    if($user) {
+                        Craft::$app->elements->deleteElement($user);
+                    }
+                    SeederUserRecord::deleteAll(['userUid' => $seededUser->userUid]);
                 }
             }
 		}
