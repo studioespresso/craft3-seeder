@@ -74,7 +74,7 @@ class Users extends Component {
      */
     public function saveSeededUser($user) {
         $record = new SeederUserRecord();
-        $record->userId = $user->id;
+        $record->userUid = $user->uid;
         $record->save();
     }
 }

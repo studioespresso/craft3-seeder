@@ -77,7 +77,7 @@ class Entries extends Component {
 	 */
 	public function saveSeededEntry($entry) {
 		$record          = new SeederEntryRecord();
-		$record->entryId = $entry->id;
+		$record->entryUid = $entry->uid;
 		$record->section = $entry->sectionId;
 		$record->save();
 	}
