@@ -58,7 +58,7 @@
                 {% endif %}
                 {% if data.users is defined %}
                     <input type="checkbox" id="users" name="data[users][]" class="all checkbox" value="" checked="checked">
-                    <label for="users"><b>{{ 'Users'|t }} ({{ data.users.count }})</b></label>
+                    <label for="users">{{ 'Users'|t }} ({{ data.users.count }})</label>
                 {% endif %}
             </div>
         {% endif %}

@@ -43,6 +43,9 @@ Once you're done building out the site, the plugin gives you an easy way to remo
 - [ ] Category fields
 - [ ] Asset fields 
 
+#### Plugin elements
+- [ ] Commerce products & variants
+
 #### Core fields
 - [x] Title
 - [x] Plain text
