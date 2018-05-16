@@ -1,0 +1,71 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Seeder plugin for Craft CMS 3.x
+ *
+ * Seeder index.twig
+ *
+ * @author    studioespresso
+ * @copyright Copyright (c) 2018 studioespresso
+ * @link      https://studioespresso.co
+ * @package   Seeder
+ * @since     1.0.0
+ */
+#}
+
+{% extends "_layouts/cp" %}
+{% import "_includes/forms" as forms %}
+
+{% set docsUrl = "https://github.com/studioespressoco/seeder/blob/master/README.md" %}
+
+{% set title = "Seeder" %}
+
+{% set pluginCpUrl = url('seeder') %}
+
+{% set content %}
+    <form method="post" action="{{ actionUrl('seeder/seeder/clean') }}">
+        {% if data|length %}
+        {{ csrfInput() }}
+        {{ redirectInput('seeder') }}
+        Select the seeded entries you want to remove
+
+
+        {% if data.sections is defined %}
+            <h2>{{ 'Entries' }}</h2>
+
+            {% for section in data.sections %}
+                <div class="checkbox-select">
+                    <input type="checkbox" value="{{ section.id }}" class="all checkbox" id="{{ section.name }}"
+                           name="data[sections][]" checked="checked" >
+                    <label for="{{ section.name }}">{{ section.name }} ({{ section.count }})</label>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+        {% if data.assets is defined or data.users is defined or data.categoryGroups is defined %}
+            <h2>{{ 'Other'|t }}</h2>
+            <div class="checkbox-select">
+                {% if data.categoryGroups is defined %}
+                        <div class="checkbox-select">
+                            <input type="checkbox" value="categories" class="all checkbox" id="categories"
+                                   name="data[categories]" checked="checked" >
+                            <label for="categories">{{ 'Categories' }} ({{ data.categoryGroups.count }})</label>
+                        </div>
+                {% endif %}
+                {% if data.assets is defined %}
+                <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="" checked="checked">
+                <label for="assets"><b>{{ 'Assets'|t }} ({{ data.assets.count }})</b></label>
+                {% endif %}
+                {% if data.users is defined %}
+                    <input type="checkbox" id="users" name="data[users][]" class="all checkbox" value="" checked="checked">
+                    <label for="users">{{ 'Users'|t }} ({{ data.users.count }})</label>
+                {% endif %}
+            </div>
+        {% endif %}
+        <hr>
+        <input type="submit" class="btn submit" value="Clean">
+        {% else %}
+            You don't have any seeded entries at the moment.
+        {% endif %}
+    </form>
+{% endset %}

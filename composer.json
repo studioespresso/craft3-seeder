@@ -1,0 +1,51 @@
+{
+    "name": "studioespresso/craft-seeder",
+    "description": "Easy entries seeder for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "seeder"
+    ],
+    "support": {
+        "docs": "https://github.com/studioespresso/craft3-seeder/blob/master/README.md",
+        "issues": "https://github.com/studioespresso/craft3-seeder/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Studio Espresso",
+            "homepage": "https://www.studioepsresso.co"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0",
+        "fzaninotto/faker": "^1.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "studioespresso\\seeder\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Seeder",
+        "handle": "seeder",
+        "hasCpSettings": false,
+        "hasCpSection": true,
+        "components": {
+            "weeder": "studioespresso\\seeder\\services\\Weeder",
+            "entries": "studioespresso\\seeder\\services\\Entries",
+            "categories": "studioespresso\\seeder\\services\\Categories",
+            "users": "studioespresso\\seeder\\services\\Users",
+            "fields": "studioespresso\\seeder\\services\\fields\\Fields",
+            "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
+            "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor",
+            "supertable": "studioespresso\\seeder\\services\\fields\\Supertable"
+        },
+        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/seeder/master/CHANGELOG.md",
+        "class": "studioespresso\\seeder\\Seeder"
+    }
+}
