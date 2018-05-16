@@ -7,6 +7,10 @@
 Seeder allows you to quickly create dummy entries through the command line. And you can just as easily remove the dummy data when you're done building the site.
 With the plugin installed, running `./craft help seeder/generate` will show you which commands are available
 
+Since the plugin is only usefull during the development and not on a live site, charging money for it would be stupid (you could just free trial it every time). Instead you can download it for free and if you want to support future development, you can support it on [beerpay.io](https://beerpay.io/studioespresso/craft3-seeder). Thanks! 
+
+[![Beerpay](https://beerpay.io/studioespresso/craft3-seeder/badge.svg)](https://beerpay.io/studioespresso/craft3-seeder)
+
 #### Entries (Section ID, count)
 
 Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
