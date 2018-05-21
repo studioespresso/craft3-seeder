@@ -67,6 +67,7 @@ class Install extends Migration
     public function safeDown()
     {
         $this->dropTable(SeederEntryRecord::$tableName);
+        $this->dropTable(SeederCategoryRecord::$tableName);
         $this->dropTable(SeederAssetRecord::$tableName);
         $this->dropTable(SeederUserRecord::$tableName);
     }
