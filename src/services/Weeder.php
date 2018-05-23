@@ -10,6 +10,7 @@
 
 namespace studioespresso\seeder\services;
 
+use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\User;
@@ -68,9 +69,12 @@ class Weeder extends Component
 
     public function assets() {
         $seededAssets = SeederAssetRecord::find();
-        foreach($seededAssets->all() as $asset) {
-            Craft::$app->elements->deleteElementById($asset->assetId);
-            SeederAssetRecord::deleteAll(['assetId' => $asset->assetId]);
+        foreach($seededAssets->all() as $seededAsset) {
+            $asset = Asset::find()
+                ->uid($seededAsset->assetUid)
+                ->one();
+            Craft::$app->elements->deleteElement($asset);
+            SeederAssetRecord::deleteAll(['assetUid' => $seededAsset->assetUid]);
         }
     }
 

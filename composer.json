@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-seeder",
     "description": "Easy entries seeder for Craft CMS",
     "type": "craft-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": [
         "craft",
         "cms",
@@ -45,7 +45,7 @@
             "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor",
             "supertable": "studioespresso\\seeder\\services\\fields\\Supertable"
         },
-        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/seeder/master/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/studioespresso/craft3-seeder/master/CHANGELOG.md",
         "class": "studioespresso\\seeder\\Seeder"
     }
 }

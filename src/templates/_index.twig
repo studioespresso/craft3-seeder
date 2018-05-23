@@ -16,8 +16,6 @@
 {% extends "_layouts/cp" %}
 {% import "_includes/forms" as forms %}
 
-{% set docsUrl = "https://github.com/studioespressoco/seeder/blob/master/README.md" %}
-
 {% set title = "Seeder" %}
 
 {% set pluginCpUrl = url('seeder') %}
@@ -54,7 +52,7 @@
                 {% endif %}
                 {% if data.assets is defined %}
                 <input type="checkbox" id="assets" name="data[assets][]" class="all checkbox" value="" checked="checked">
-                <label for="assets"><b>{{ 'Assets'|t }} ({{ data.assets.count }})</b></label>
+                <label for="assets">{{ 'Assets'|t }} ({{ data.assets.count }})</label>
                 {% endif %}
                 {% if data.users is defined %}
                     <input type="checkbox" id="users" name="data[users][]" class="all checkbox" value="" checked="checked">
