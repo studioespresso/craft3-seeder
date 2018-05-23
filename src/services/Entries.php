@@ -87,7 +87,7 @@ class Entries extends Component {
 	 */
 	public function saveSeededAsset($asset) {
 		$record = new SeederAssetRecord();
-		$record->assetId = $asset->id;
+		$record->assetUid = $asset->uid;
 		$record->save();
 	}
 
