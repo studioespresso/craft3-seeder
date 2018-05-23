@@ -264,7 +264,7 @@ class Fields extends Component
         $folderId = $folder[1];
         $assetFolder = Craft::$app->assets->getFolderById($folderId);
 
-        for ($x = 1; $x <= $field->limit; $x++) {
+        for ($x = 1; $x <= rand(1, $field->limit); $x++) {
 
             $image = $this->factory->imageUrl(1600, 1200, null, true);
             $ch = curl_init();
