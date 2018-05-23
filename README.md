@@ -30,11 +30,21 @@ Use the command below, followed by the ``sectionId`` and the number of entries y
 ```
 
 ## Clean up
-Once you're done building out the site, the plugin gives you an easy way to remove the dummy data (entries, assets, categories and users). This can be done through the CP (click the Seeder section the sidebar) or through the command line.
+Once you're done building out the site, the plugin gives you an easy way to remove the dummy data (entries, assets, categories and users). This can be done through the CP (click the Seeder section the sidebar) or through the command line with the following command:
 
 ```Shell
 ./craft seeder/clean-up/all
 ```
+
+## Troubleshooting
+The most common problem with the plugins is getting the following error:
+````Shell
+Unknown command: seeder/generate/entries
+````
+If you have the plugin installed in the CP and are seeing this message, craft can not connect to your database through the command line. Your site probably works correctly but CLI commands won't.
+
+If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `localhost`.  
+
 
 ## Roadmap
 
