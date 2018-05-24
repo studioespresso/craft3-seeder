@@ -263,8 +263,12 @@ class Fields extends Component
         $folder = explode(':', $field->defaultUploadLocationSource);
         $folderId = $folder[1];
         $assetFolder = Craft::$app->assets->getFolderById($folderId);
-
-        for ($x = 1; $x <= rand(1, $field->limit); $x++) {
+        if($field->limit) {
+        	$limit = $field->limit;
+        } else {
+        	$limit = 5;
+        }
+        for ($x = 1; $x <= rand(1, $limit); $x++) {
 
             $image = $this->factory->imageUrl(1600, 1200, null, true);
             $ch = curl_init();
