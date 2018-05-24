@@ -81,6 +81,12 @@ class GenerateController extends Controller
         return $result;
     }
 
+    public function actionProducts($type = null, $count = 5) {
+        if(!Craft::$app->getPlugins()->isPluginEnabled('commerce')) {
+            echo "Could not find Commerce plugin. Please make sure you have the plugin installed.\n";
+        }
+    }
+
     /**
      * Generates a set of elements predefined in your config/seeder.php
      *
