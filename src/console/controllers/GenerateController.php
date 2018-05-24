@@ -96,7 +96,6 @@ class GenerateController extends Controller
         }
         $settings = Seeder::$plugin->getSettings()->sets[$name];
         foreach($settings as $type => $option) {
-            d($type, $option);
             switch ($type) {
                 case 'Users':
                     if(is_array($option)) {
