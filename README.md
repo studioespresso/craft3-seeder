@@ -11,6 +11,20 @@ Since the plugin is only usefull during the development and not on a live site, 
 
 [![Beerpay](https://beerpay.io/studioespresso/craft3-seeder/badge.svg)](https://beerpay.io/studioespresso/craft3-seeder)
 
+## Installation
+
+To install the plugin, follow these instructions.
+
+1. Open your terminal and go to your Craft project:
+
+        cd /path/to/project
+
+2. Then tell Composer to load the plugin:
+
+        composer require studioespresso/craft-seeder
+
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for "Seeder".
+
 #### Entries (Section ID, count)
 
 Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
