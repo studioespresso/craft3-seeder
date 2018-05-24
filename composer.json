@@ -39,6 +39,7 @@
             "weeder": "studioespresso\\seeder\\services\\Weeder",
             "entries": "studioespresso\\seeder\\services\\Entries",
             "categories": "studioespresso\\seeder\\services\\Categories",
+            "products": "studioespresso\\seeder\\services\\Products",
             "users": "studioespresso\\seeder\\services\\Users",
             "fields": "studioespresso\\seeder\\services\\fields\\Fields",
             "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
