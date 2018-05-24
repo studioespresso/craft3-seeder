@@ -87,6 +87,7 @@ class GenerateController extends Controller
             return;
         }
         $result = Seeder::$plugin->products->generate($type, $count);
+        echo $result;
 
     }
 

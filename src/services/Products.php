@@ -10,6 +10,8 @@
 
 namespace studioespresso\seeder\services;
 
+use craft\commerce\elements\Product;
+use craft\commerce\services\ProductTypes;
 use craft\elements\Asset;
 use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
@@ -35,6 +37,8 @@ use yii\base\Model;
  */
 class Products extends Component
 {
+
+    private $productTypes;
     /**
      * @param null $sectionId
      *
@@ -43,10 +47,24 @@ class Products extends Component
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
+    public function __construct(array $config = [])
+    {
+        $this->productTypes = new ProductTypes();
+    }
+
     public function generate($type, $count)
     {
-        dd($type);
-        $faker = Factory::create();
+        if(is_string($type)) {
+            if(!$this->productTypes->getProductTypeByHandle($type)) {
+                return "Product type not found.\n";
+            }
+            $productType = $this->productTypes->getProductTypeByHandle($type);
+        } elseif (is_int($type)) {
+            if(!$this->productTypes->getProductTypeById($type)) {
+                return "Product type not found.\n";
+            }
+            $productType = $this->productTypes->getProductTypeById($type);
+        }
 
     }
 
