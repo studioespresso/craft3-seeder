@@ -181,8 +181,12 @@ class Fields extends Component
      */
     public function Table($field, $entry)
     {
+
+        if($field->minRows) { $min = $field->minRows; } else { $min = 1; }
+        if($field->maxRows) { $max = $field->maxRows; } else { $max = $min + 10; }
+
         $table = [];
-        for ($x = 0; $x <= rand($field->minRows - 1, $field->maxRows - 1); $x++) {
+        for ($x = 0; $x <= rand($min, $max ); $x++) {
             foreach ($field->columns as $handle => $col) {
                 switch ($col['type']) {
                     case "singleline":
