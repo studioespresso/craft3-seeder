@@ -25,6 +25,9 @@
         "craftcms/cms": "^3.0.0",
         "fzaninotto/faker": "^1.7.0"
     },
+    "require-dev": {
+        "codeception/codeception": "2.4.2"
+    },
     "autoload": {
         "psr-4": {
           "studioespresso\\seeder\\": "src/"
