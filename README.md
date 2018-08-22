@@ -25,12 +25,12 @@ To install the plugin, follow these instructions.
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for "Seeder".
 
-#### Entries (Section ID, count)
+#### Entries (Section ID/handle, count)
 
-Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
+Use the command below, followed by the ``--section`` option and the ``--number`` of entries you want to create (defaults to 20 if ommited). This command works with both section ID and handle. 
 
 ```Shell
-./craft seeder/generate/entries 1 15
+./craft seeder/generate/entries --section=news --count=15
 ```
 
 #### Categories (Category group ID, count)
