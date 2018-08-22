@@ -37,6 +37,12 @@ class GenerateController extends Controller
     public $section;
 
     /**
+     * Categories group handle or id
+     * @var String
+     */
+    public $group;
+
+    /**
      * Number of entries to be seeded
      * @var Integer
      */
@@ -50,6 +56,8 @@ class GenerateController extends Controller
         switch ($actionId) {
             case 'entries':
                 return ['section','count'];
+            case 'categories':
+                return ['group','count'];
         }
     }
     /**
@@ -79,9 +87,14 @@ class GenerateController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function actionCategories($groupId = null, $count = 20)
+	public function actionCategories()
 	{
-		$result = Seeder::$plugin->categories->generate($groupId, $count);
+
+        if(!$this->group) {
+            echo "Group handle or id missing, please specify\n";
+            return false;
+        }
+		$result = Seeder::$plugin->categories->generate($this->group, $this->count);
 
 		return $result;
 	}

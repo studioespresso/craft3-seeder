@@ -33,9 +33,9 @@ Use the command below, followed by the ``--section`` option and the ``--number``
 ./craft seeder/generate/entries --section=news --count=15
 ```
 
-#### Categories (Category group ID, count)
+#### Categories (Category group ID/handle, count)
 ```Shell
-./craft seeder/generate/categories 1 10
+./craft seeder/generate/categories --group=labels --count=10
 ```
 
 #### Users (Usergroup ID, count)
