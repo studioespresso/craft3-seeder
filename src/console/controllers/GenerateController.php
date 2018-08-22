@@ -29,9 +29,29 @@ use yii\helpers\Console;
  */
 class GenerateController extends Controller
 {
+
+    /**
+     * Section handle or id
+     * @var String
+     */
+    public $section;
+
+    /**
+     * Number of entries to be seeded
+     * @var Integer
+     */
+    public $count = 20;
+
     // Public Methods
     // =========================================================================
 
+
+    public function options($actionId){
+        switch ($actionId) {
+            case 'entries':
+                return ['section','count'];
+        }
+    }
     /**
      * Generates entries for the specified section
      *
@@ -40,12 +60,15 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionEntries($sectionId = null, $count = 20)
+    public function actionEntries()
     {
-        if($sectionId) {
-		    $result = Seeder::$plugin->entries->generate($sectionId, $count);
-            return $result;
+        if(!$this->section) {
+            echo "Section handle or id missing, please specify\n";
+            return false;
         }
+
+        $result = Seeder::$plugin->entries->generate($this->section, $this->count);
+        return $result;
     }
 
 	/**
