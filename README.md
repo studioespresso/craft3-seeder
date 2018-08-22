@@ -38,9 +38,9 @@ Use the command below, followed by the ``--section`` option and the ``--number``
 ./craft seeder/generate/categories --group=labels --count=10
 ```
 
-#### Users (Usergroup ID, count)
+#### Users (Usergroup ID/handle, count)
 ```Shell
-./craft seeder/generate/users 1 5
+./craft seeder/generate/users --group=editors --count=5
 ```
 
 ## Clean up
@@ -71,8 +71,6 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [ ] Category fields
 - [ ] Asset fields 
 
-#### Plugin elements
-- [ ] Commerce products & variants
 
 #### Core fields
 - [x] Title
@@ -92,6 +90,9 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] Table
 - [x] Tags
 - [x] Users
+
+#### Plugin elements
+- [ ] Commerce products & variants
 
 #### Plugin fields
 - [x] [Redactor](https://github.com/craftcms/redactor)

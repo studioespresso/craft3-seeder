@@ -37,7 +37,7 @@ class GenerateController extends Controller
     public $section;
 
     /**
-     * Categories group handle or id
+     * Categories or user group handle or id
      * @var String
      */
     public $group;
@@ -58,6 +58,8 @@ class GenerateController extends Controller
                 return ['section','count'];
             case 'categories':
                 return ['group','count'];
+            case 'users':
+                return ['group','count'];
         }
     }
     /**
@@ -72,7 +74,7 @@ class GenerateController extends Controller
     {
         if(!$this->section) {
             echo "Section handle or id missing, please specify\n";
-            return false;
+            return;
         }
 
         $result = Seeder::$plugin->entries->generate($this->section, $this->count);
@@ -92,7 +94,7 @@ class GenerateController extends Controller
 
         if(!$this->group) {
             echo "Group handle or id missing, please specify\n";
-            return false;
+            return;
         }
 		$result = Seeder::$plugin->categories->generate($this->group, $this->count);
 
@@ -107,13 +109,18 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionUsers($groupId = null, $count = 5)
+    public function actionUsers()
     {
         if (Craft::$app->getEdition() != Craft::Pro) {
-            echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel\n";
+            echo "Users requires your Craft install to be upgrade to Pro. You can trial Craft Pro in the control panel\n";
             return;
         }
-        $result = Seeder::$plugin->users->generate($groupId, $count);
+
+        if(!$this->group) {
+            echo "Group handle or id missing, please specify\n";
+            return;
+        }
+        $result = Seeder::$plugin->users->generate($this->group, $this->count);
         return $result;
     }
 
