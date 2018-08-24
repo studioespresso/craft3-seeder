@@ -1,9 +1,15 @@
 # Craft Seeder Changelog
 
+## 2.0.0 - 2018-08-24
+### Changed
+- The commands now take named parameters in stead of just IDs
+- The commands now also work with section/group handle or with section/group id
+### Added
+- Supertable support, Super table static field support and all core fields in a Supertable field
+
 ## 1.0.3 - 2018-05-29
 ### Fixed
 - Fixes an issues with min/max rows in table fields (issue #3)
-
 
 ## 1.0.2 - 2018-05-24
 ### Fixed
