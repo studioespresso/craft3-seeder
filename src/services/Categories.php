@@ -47,14 +47,24 @@ class Categories extends Component {
 	 * @throws \yii\base\Exception
 	 * @throws \yii\base\InvalidConfigException
 	 */
-	public function generate( $groupId = null, $count ) {
+	public function generate( $group = null, $count ) {
+
+        if(ctype_digit($group)) {
+            $categoryGroup = Craft::$app->categories->getGroupById((int) $group);
+        } else {
+            $categoryGroup = Craft::$app->categories->getGroupByHandle($group);
+        }
+
+        if(!$categoryGroup) {
+            echo "Group not found\n";
+            return false;
+        }
 		$faker = Factory::create();
-		$categoryGroup = Craft::$app->categories->getGroupById((int) $groupId);
 
 		
 		for ( $x = 1; $x <= $count; $x ++ ) {
 			$category      = new Category( [
-				'groupId' => (int) $groupId,
+				'groupId' => (int) $categoryGroup->id,
 				'title'     => Seeder::$plugin->fields->Title(20),
 			] );
 

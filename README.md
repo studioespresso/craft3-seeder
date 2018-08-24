@@ -25,22 +25,22 @@ To install the plugin, follow these instructions.
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for "Seeder".
 
-#### Entries (Section ID, count)
+#### Entries (Section ID/handle, count)
 
-Use the command below, followed by the ``sectionId`` and the number of entries you want to create (defaults to 20 if ommited). 
+Use the command below, followed by the ``--section`` option and the ``--number`` of entries you want to create (defaults to 20 if ommited). This command works with both section ID and handle. 
 
 ```Shell
-./craft seeder/generate/entries 1 15
+./craft seeder/generate/entries --section=news --count=15
 ```
 
-#### Categories (Category group ID, count)
+#### Categories (Category group ID/handle, count)
 ```Shell
-./craft seeder/generate/categories 1 10
+./craft seeder/generate/categories --group=labels --count=10
 ```
 
-#### Users (Usergroup ID, count)
+#### Users (Usergroup ID/handle, count)
 ```Shell
-./craft seeder/generate/users 1 5
+./craft seeder/generate/users --group=editors --count=5
 ```
 
 ## Clean up
@@ -71,8 +71,6 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [ ] Category fields
 - [ ] Asset fields 
 
-#### Plugin elements
-- [ ] Commerce products & variants
 
 #### Core fields
 - [x] Title
@@ -93,7 +91,10 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] Tags
 - [x] Users
 
+#### Plugin elements
+- [ ] Commerce products & variants
+
 #### Plugin fields
 - [x] [Redactor](https://github.com/craftcms/redactor)
 - [x] [CKEditor](https://github.com/craftcms/ckeditor)
-- [ ] [Super Table](https://github.com/verbb/super-table)
+- [x] [Super Table](https://github.com/verbb/super-table)

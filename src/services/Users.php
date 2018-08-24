@@ -48,13 +48,21 @@ class Users extends Component {
 	 * @throws \yii\base\Exception
 	 * @throws \yii\base\InvalidConfigException
 	 */
-	public function generate( $groupId = null, $count ) {
-		$faker = Factory::create();
-		$userGroup = Craft::$app->userGroups->getGroupById($groupId);
-		if(!$userGroup) {
-		    echo "Usergroup not found";
-		    exit();
+	public function generate( $group = null, $count ) {
+
+        if(ctype_digit($group)) {
+            $userGroup = Craft::$app->userGroups->getGroupById((int) $group);
+        } else {
+            $userGroup = Craft::$app->userGroups->getGroupByHandle($group);
         }
+
+        if(!$userGroup) {
+            echo "Group not found\n";
+            return false;
+        }
+
+		$faker = Factory::create();
+
 		for ( $x = 1; $x <= $count; $x ++ ) {
 		    $user = new User();
 		    $user->passwordResetRequired = true;

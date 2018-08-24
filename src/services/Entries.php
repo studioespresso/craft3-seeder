@@ -45,16 +45,24 @@ class Entries extends Component {
 	 * @throws \yii\base\Exception
 	 * @throws \yii\base\InvalidConfigException
 	 */
-	public function generate( $sectionId = null, $count ) {
-		$faker = Factory::create();
+	public function generate( $section = null, $count ) {
+	    if(ctype_digit($section)) {
+		    $section = Craft::$app->sections->getSectionById( (int) $section );
+        } else {
+            $section = Craft::$app->sections->getSectionByHandle($section);
+        }
 
-		$section = Craft::$app->sections->getSectionById( (int) $sectionId );
+        if(!$section) {
+	        echo "Section not found\n";
+	        return false;
+        }
+		$faker = Factory::create();
 
 		foreach ( $section->getEntryTypes() as $entryType ) {
 			for ( $x = 1; $x <= $count; $x ++ ) {
 				$typeFields = Craft::$app->fields->getFieldsByLayoutId( $entryType->getFieldLayoutId() );
 				$entry      = new Entry( [
-					'sectionId' => (int) $sectionId,
+					'sectionId' => (int) $section->id,
 					'typeId'    => $entryType->id,
 					'title'     => Seeder::$plugin->fields->Title(),
 				] );

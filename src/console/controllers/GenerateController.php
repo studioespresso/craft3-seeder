@@ -29,9 +29,39 @@ use yii\helpers\Console;
  */
 class GenerateController extends Controller
 {
+
+    /**
+     * Section handle or id
+     * @var String
+     */
+    public $section;
+
+    /**
+     * Categories or user group handle or id
+     * @var String
+     */
+    public $group;
+
+    /**
+     * Number of entries to be seeded
+     * @var Integer
+     */
+    public $count = 20;
+
     // Public Methods
     // =========================================================================
 
+
+    public function options($actionId){
+        switch ($actionId) {
+            case 'entries':
+                return ['section','count'];
+            case 'categories':
+                return ['group','count'];
+            case 'users':
+                return ['group','count'];
+        }
+    }
     /**
      * Generates entries for the specified section
      *
@@ -40,12 +70,15 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionEntries($sectionId = null, $count = 20)
+    public function actionEntries()
     {
-        if($sectionId) {
-		    $result = Seeder::$plugin->entries->generate($sectionId, $count);
-            return $result;
+        if(!$this->section) {
+            echo "Section handle or id missing, please specify\n";
+            return;
         }
+
+        $result = Seeder::$plugin->entries->generate($this->section, $this->count);
+        return $result;
     }
 
 	/**
@@ -56,9 +89,14 @@ class GenerateController extends Controller
 	 *
 	 * @return mixed
 	 */
-	public function actionCategories($groupId = null, $count = 20)
+	public function actionCategories()
 	{
-		$result = Seeder::$plugin->categories->generate($groupId, $count);
+
+        if(!$this->group) {
+            echo "Group handle or id missing, please specify\n";
+            return;
+        }
+		$result = Seeder::$plugin->categories->generate($this->group, $this->count);
 
 		return $result;
 	}
@@ -71,13 +109,18 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionUsers($groupId = null, $count = 5)
+    public function actionUsers()
     {
         if (Craft::$app->getEdition() != Craft::Pro) {
-            echo "Users requires your Craft install to be upgrade to Pro. You can trial this in the control panel\n";
+            echo "Users requires your Craft install to be upgrade to Pro. You can trial Craft Pro in the control panel\n";
             return;
         }
-        $result = Seeder::$plugin->users->generate($groupId, $count);
+
+        if(!$this->group) {
+            echo "Group handle or id missing, please specify\n";
+            return;
+        }
+        $result = Seeder::$plugin->users->generate($this->group, $this->count);
         return $result;
     }
 
