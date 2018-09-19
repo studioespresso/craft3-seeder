@@ -73,8 +73,10 @@ class Weeder extends Component
             $asset = Asset::find()
                 ->uid($seededAsset->assetUid)
                 ->one();
-            Craft::$app->elements->deleteElement($asset);
-            SeederAssetRecord::deleteAll(['assetUid' => $seededAsset->assetUid]);
+            if($asset) {
+                Craft::$app->elements->deleteElement($asset);
+                SeederAssetRecord::deleteAll(['assetUid' => $seededAsset->assetUid]);
+            }
         }
     }
 

@@ -17,9 +17,6 @@ use craft\elements\User;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
 use Faker\Provider\Person;
-use studioespresso\seeder\records\SeederAssetRecord;
-use studioespresso\seeder\records\SeederEntryRecord;
-use studioespresso\seeder\records\SeederUserRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -71,18 +68,10 @@ class Users extends Component {
 		    $user->firstName = $faker->firstName;
 		    $user->lastName = $faker->lastName;
 		    Craft::$app->elements->saveElement($user);
-		    $this->saveSeededUser($user);
+            Seeder::$plugin->seeder->saveSeededUser($user);
 		    Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
 		}
 
 	}
 
-    /**
-     * @param User $user
-     */
-    public function saveSeededUser($user) {
-        $record = new SeederUserRecord();
-        $record->userUid = $user->uid;
-        $record->save();
-    }
 }

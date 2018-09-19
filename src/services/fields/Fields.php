@@ -289,7 +289,7 @@ class Fields extends Component
             $saved = file_put_contents($tempPath, $picture);
 
             $result = $this->uploadNewAsset($assetFolder->id, $tempPath);
-            Seeder::$plugin->entries->saveSeededAsset($result);
+            Seeder::$plugin->seeder->saveSeededAsset($result);
             $assets[] = $result->id;
         }
 
@@ -319,7 +319,7 @@ class Fields extends Component
             $matrixBlock->typeId = $type->id;
             $matrixBlock->fieldId = $field->id;
             $matrixBlock->ownerId = $entry->id;
-            $matrixBlock = Seeder::$plugin->entries->populateFields($blockTypeFields, $matrixBlock);
+            $matrixBlock = Seeder::$plugin->seeder->populateFields($blockTypeFields, $matrixBlock);
             Craft::$app->elements->saveElement($matrixBlock);
 
         }

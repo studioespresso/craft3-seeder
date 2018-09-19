@@ -39,6 +39,7 @@
         "hasCpSettings": false,
         "hasCpSection": true,
         "components": {
+            "seeder": "studioespresso\\seeder\\services\\SeederService",
             "weeder": "studioespresso\\seeder\\services\\Weeder",
             "entries": "studioespresso\\seeder\\services\\Entries",
             "categories": "studioespresso\\seeder\\services\\Categories",

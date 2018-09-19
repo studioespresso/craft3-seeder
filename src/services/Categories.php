@@ -16,9 +16,6 @@ use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
 use Faker\Provider\Person;
-use studioespresso\seeder\records\SeederAssetRecord;
-use studioespresso\seeder\records\SeederCategoryRecord;
-use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -69,17 +66,9 @@ class Categories extends Component {
 			] );
 
 			Craft::$app->getElements()->saveElement( $category );
-			$this->saveSeededCategory($category);
+			Seeder::$plugin->seeder->saveSeededCategory($category);
 		}
 
 	}
 
-    /**
-     * @param Asset $asset
-     */
-    public function saveSeededCategory($category) {
-        $record = new SeederCategoryRecord();
-        $record->categoryUid = $category->uid;
-        $record->save();
-    }
 }
