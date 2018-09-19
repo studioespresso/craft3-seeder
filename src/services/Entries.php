@@ -15,8 +15,6 @@ use craft\elements\Entry;
 use craft\errors\FieldNotFoundException;
 use Faker\Factory;
 use Faker\Provider\Person;
-use studioespresso\seeder\records\SeederAssetRecord;
-use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -67,85 +65,16 @@ class Entries extends Component {
 					'title'     => Seeder::$plugin->fields->Title(),
 				] );
 				Craft::$app->getElements()->saveElement( $entry );
-				$entry = $this->populateFields( $typeFields, $entry );
-
+				$entry = Seeder::$plugin->seeder->populateFields( $typeFields, $entry );
 				Craft::$app->getElements()->saveElement( $entry );
 				$entry->id;
 
-				$this->saveSeededEntry($entry);
+                Seeder::$plugin->seeder->saveSeededEntry($entry);
 
 			}
 		}
 		return $section->name;
 
-	}
-
-	/**
-	 * @param Entry $entry
-	 */
-	public function saveSeededEntry($entry) {
-		$record          = new SeederEntryRecord();
-		$record->entryUid = $entry->uid;
-		$record->section = $entry->sectionId;
-		$record->save();
-	}
-
-	/**
-	 * @param Asset $asset
-	 */
-	public function saveSeededAsset($asset) {
-		$record = new SeederAssetRecord();
-		$record->assetUid = $asset->uid;
-		$record->save();
-	}
-
-	/**
-	 * @param $fields
-	 * @param Entry $entry
-	 */
-	public function populateFields( $fields, $entry ) {
-		$entryFields = [];
-		foreach ( $fields as $field ) {
-			try {
-				$fieldData = $this->isFieldSupported( $field );
-				if ( $fieldData ) {
-					$fieldProvider                   = $fieldData[0];
-					$fieldType                       = $fieldData[1];
-					$entryFields[ $field['handle'] ] = Seeder::$plugin->$fieldProvider->$fieldType( $field, $entry );
-				}
-
-			} catch ( FieldNotFoundException $e ) {
-				dd($e);
-			}
-		}
-		$entry->setFieldValues( $entryFields );
-
-		return $entry;
-
-	}
-
-	private function isFieldSupported( $field ) {
-		$fieldType     = explode( '\\', get_class( $field ) );
-		$fieldProvider = $fieldType[1];
-		$fieldType     = end($fieldType);
-
-		if ( class_exists( 'studioespresso\\seeder\\services\\fields\\' . $fieldProvider ) ) {
-			if ( in_array( $fieldType, get_class_methods( Seeder::$plugin->$fieldProvider ) ) ) {
-				return [ $fieldProvider, $fieldType ];
-			} else {
-			    if(Seeder::$plugin->getSettings()->debug) {
-				    throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
-                } else {
-			        echo "Fieldtype not supported:" . $fieldType . "\n";
-                }
-			}
-		} else {
-            if(Seeder::$plugin->getSettings()->debug) {
-                throw new FieldNotFoundException( 'Fieldtype not supported: ' . $fieldType );
-            } else {
-                echo "Fieldtype not supported:" . $fieldType . "\n";
-            }
-		}
 	}
 
 }

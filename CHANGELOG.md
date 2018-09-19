@@ -1,5 +1,12 @@
 # Craft Seeder Changelog
 
+
+## 2.1.0 - 2018-09-19
+
+### Added
+- Added support for fields on Users
+- Added support for fields on Categories
+
 ## 2.0.0 - 2018-08-24
 ### Changed
 - The commands now take named parameters in stead of just IDs

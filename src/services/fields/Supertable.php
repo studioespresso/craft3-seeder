@@ -58,7 +58,7 @@ class Supertable extends Component  {
             $superTableBlock->typeId = $types[0];
             $superTableBlock->fieldId = $field->id;
             $superTableBlock->ownerId = $entry->id;
-            $superTableBlock = Seeder::$plugin->entries->populateFields($fields, $superTableBlock);
+            $superTableBlock = Seeder::$plugin->seeder->populateFields($fields, $superTableBlock);
             Craft::$app->elements->saveElement($superTableBlock);
 
         }

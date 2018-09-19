@@ -11,6 +11,7 @@
 namespace studioespresso\seeder;
 
 use studioespresso\seeder\models\Settings;
+use studioespresso\seeder\services\SeederService;
 use studioespresso\seeder\services\Entries as EntriesService;
 use studioespresso\seeder\services\Categories as CategoriesService;
 use studioespresso\seeder\services\Weeder as WeederService;
@@ -43,6 +44,7 @@ use yii\base\Event;
  * @author    Studio Espresso
  * @package   Seeder
  * @since     1.0.0
+ * @property  SeederService seeder
  * @property  WeederService weeder
  * @property  EntriesService  entries
  * @property  CategoriesService categories
