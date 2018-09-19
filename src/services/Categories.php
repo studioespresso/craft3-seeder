@@ -58,13 +58,15 @@ class Categories extends Component {
         }
 		$faker = Factory::create();
 
-		
+        $fields = Craft::$app->fields->getFieldsByElementType('craft\elements\Category');
+
 		for ( $x = 1; $x <= $count; $x ++ ) {
 			$category      = new Category( [
 				'groupId' => (int) $categoryGroup->id,
 				'title'     => Seeder::$plugin->fields->Title(20),
 			] );
-
+            Craft::$app->getElements()->saveElement( $category );
+			Seeder::$plugin->seeder->populateFields($fields, $category);
 			Craft::$app->getElements()->saveElement( $category );
 			Seeder::$plugin->seeder->saveSeededCategory($category);
 		}

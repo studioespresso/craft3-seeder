@@ -61,8 +61,8 @@ class Users extends Component
         }
 
         $faker = Factory::create();
-        
-        $userFields = Craft::$app->fields->getFieldsByElementType('craft\elements\User');
+
+        $fields = Craft::$app->fields->getFieldsByElementType('craft\elements\User');
 
         for ($x = 1; $x <= $count; $x++) {
             $user = new User();
@@ -71,7 +71,8 @@ class Users extends Component
             $user->username = $user->email;
             $user->firstName = $faker->firstName;
             $user->lastName = $faker->lastName;
-            Seeder::$plugin->seeder->populateFields($userFields, $user);
+            Craft::$app->elements->saveElement($user);
+            Seeder::$plugin->seeder->populateFields($fields, $user);
             Craft::$app->elements->saveElement($user);
             Seeder::$plugin->seeder->saveSeededUser($user);
             Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
