@@ -36,42 +36,47 @@ use yii\base\Model;
  * @package   Seeder
  * @since     1.0.0
  */
-class Users extends Component {
-	/**
-	 * @param null $sectionId
-	 *
-	 * @throws \Throwable
-	 * @throws \craft\errors\ElementNotFoundException
-	 * @throws \yii\base\Exception
-	 * @throws \yii\base\InvalidConfigException
-	 */
-	public function generate( $group = null, $count ) {
+class Users extends Component
+{
+    /**
+     * @param null $sectionId
+     *
+     * @throws \Throwable
+     * @throws \craft\errors\ElementNotFoundException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function generate($group = null, $count)
+    {
 
-        if(ctype_digit($group)) {
-            $userGroup = Craft::$app->userGroups->getGroupById((int) $group);
+        if (ctype_digit($group)) {
+            $userGroup = Craft::$app->userGroups->getGroupById((int)$group);
         } else {
             $userGroup = Craft::$app->userGroups->getGroupByHandle($group);
         }
 
-        if(!$userGroup) {
+        if (!$userGroup) {
             echo "Group not found\n";
             return false;
         }
 
-		$faker = Factory::create();
+        $faker = Factory::create();
+        
+        $userFields = Craft::$app->fields->getFieldsByElementType('craft\elements\User');
 
-		for ( $x = 1; $x <= $count; $x ++ ) {
-		    $user = new User();
-		    $user->passwordResetRequired = true;
-		    $user->email = $faker->email;
-		    $user->username = $user->email;
-		    $user->firstName = $faker->firstName;
-		    $user->lastName = $faker->lastName;
-		    Craft::$app->elements->saveElement($user);
+        for ($x = 1; $x <= $count; $x++) {
+            $user = new User();
+            $user->passwordResetRequired = true;
+            $user->email = $faker->email;
+            $user->username = $user->email;
+            $user->firstName = $faker->firstName;
+            $user->lastName = $faker->lastName;
+            Seeder::$plugin->seeder->populateFields($userFields, $user);
+            Craft::$app->elements->saveElement($user);
             Seeder::$plugin->seeder->saveSeededUser($user);
-		    Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
-		}
+            Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
+        }
 
-	}
+    }
 
 }
