@@ -47,7 +47,8 @@
             "fields": "studioespresso\\seeder\\services\\fields\\Fields",
             "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
             "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor",
-            "supertable": "studioespresso\\seeder\\services\\fields\\Supertable"
+            "supertable": "studioespresso\\seeder\\services\\fields\\Supertable",
+            "cta": "studioespresso\\seeder\\services\\fields\\CTA"
         },
         "changelogUrl": "https://raw.githubusercontent.com/studioespresso/craft3-seeder/master/CHANGELOG.md",
         "class": "studioespresso\\seeder\\Seeder"
