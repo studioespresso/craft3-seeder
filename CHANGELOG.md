@@ -1,6 +1,14 @@
 # Craft Seeder Changelog
 
 
+## Unreleased
+
+### Added
+- Added support for [statikbe/craft-cta-field](https://github.com/statikbe/craft3-ctafield)
+### Fixed
+- Fixed an issue where seeding a Supertable field in a Matrix field would crash
+- Fixed an issue with minimum & maximum number of blocks on a Supertable field
+
 ## 2.1.0 - 2018-09-19
 
 ### Added
