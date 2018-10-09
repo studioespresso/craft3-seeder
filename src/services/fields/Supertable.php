@@ -38,11 +38,13 @@ class Supertable extends Component  {
     public function SuperTableField(SuperTableField $field, $entry) {
         $types = $field->getBlockTypes();
         $fields = $field->getBlockTypeFields();
+
         if($field->staticField) {
             $blockCount = 1;
         } else {
-            $blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
+            $blockCount = rand(!empty($field->minRows) ? $field->minRows : 1, !empty($field->maxRows) ? $field->maxRows : 6);
         }
+
         $blockIds = [];
 
         $types = array_map(function ($type) {
