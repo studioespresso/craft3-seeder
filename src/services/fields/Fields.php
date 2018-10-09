@@ -319,6 +319,7 @@ class Fields extends Component
             $matrixBlock->typeId = $type->id;
             $matrixBlock->fieldId = $field->id;
             $matrixBlock->ownerId = $entry->id;
+            Craft::$app->elements->saveElement($matrixBlock);
             $matrixBlock = Seeder::$plugin->seeder->populateFields($blockTypeFields, $matrixBlock);
             Craft::$app->elements->saveElement($matrixBlock);
 
