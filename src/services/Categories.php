@@ -66,9 +66,9 @@ class Categories extends Component {
 				'title'     => Seeder::$plugin->fields->Title(20),
 			] );
             Craft::$app->getElements()->saveElement( $category );
+			Seeder::$plugin->seeder->saveSeededCategory($category);
 			Seeder::$plugin->seeder->populateFields($fields, $category);
 			Craft::$app->getElements()->saveElement( $category );
-			Seeder::$plugin->seeder->saveSeededCategory($category);
 		}
 
 	}

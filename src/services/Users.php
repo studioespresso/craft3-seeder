@@ -72,9 +72,9 @@ class Users extends Component
             $user->firstName = $faker->firstName;
             $user->lastName = $faker->lastName;
             Craft::$app->elements->saveElement($user);
+            Seeder::$plugin->seeder->saveSeededUser($user);
             Seeder::$plugin->seeder->populateFields($fields, $user);
             Craft::$app->elements->saveElement($user);
-            Seeder::$plugin->seeder->saveSeededUser($user);
             Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
         }
 

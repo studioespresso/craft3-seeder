@@ -65,11 +65,11 @@ class Entries extends Component {
 					'title'     => Seeder::$plugin->fields->Title(),
 				] );
 				Craft::$app->getElements()->saveElement( $entry );
+                Seeder::$plugin->seeder->saveSeededEntry($entry);
 				$entry = Seeder::$plugin->seeder->populateFields( $typeFields, $entry );
 				Craft::$app->getElements()->saveElement( $entry );
 				$entry->id;
 
-                Seeder::$plugin->seeder->saveSeededEntry($entry);
 
 			}
 		}
