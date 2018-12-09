@@ -1,5 +1,5 @@
 {
-    "name": "studioespresso/craft-seeder",
+    "name": "smcyr/craft-seeder",
     "description": "Easy entries seeder for Craft CMS",
     "type": "craft-plugin",
     "version": "2.1.0",
