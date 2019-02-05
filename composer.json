@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-seeder",
     "description": "Easy entries seeder for Craft CMS",
     "type": "craft-plugin",
-    "version": "2.1.0",
+    "version": "3.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0",
+        "craftcms/cms": "^3.1.0",
         "fzaninotto/faker": "^1.7.0"
     },
     "require-dev": {

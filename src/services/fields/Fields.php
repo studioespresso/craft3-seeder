@@ -265,8 +265,9 @@ class Fields extends Component
         }
 
         $folder = explode(':', $field->defaultUploadLocationSource);
-        $folderId = $folder[1];
-        $assetFolder = Craft::$app->assets->getFolderById($folderId);
+        $folderUid = $folder[1];
+        $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
+
         if($field->limit) {
         	$limit = $field->limit;
         } else {
