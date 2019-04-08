@@ -93,6 +93,7 @@ class SeederService extends Component
      */
     public function saveSeededCategory($category) {
         $record = new SeederCategoryRecord();
+        $record->section = $category->groupId;
         $record->categoryUid = $category->uid;
         $record->save();
     }
