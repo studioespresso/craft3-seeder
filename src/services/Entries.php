@@ -67,7 +67,9 @@ class Entries extends Component
             for ($x = 1; $x <= $count; $x++) {
                 $current++;
                 Console::updateProgress($current, $count);
-                $typeFields = Craft::$app->fields->getFieldsByLayoutId($entryType->getFieldLayoutId());
+                if($entryType->fieldLayoutId) {
+                    $typeFields = Craft::$app->fields->getFieldsByLayoutId($entryType->getFieldLayoutId());
+                }
                 $entry = new Entry([
                     'sectionId' => (int)$section->id,
                     'typeId' => $entryType->id,
@@ -75,8 +77,10 @@ class Entries extends Component
                 ]);
                 Craft::$app->getElements()->saveElement($entry);
                 Seeder::$plugin->seeder->saveSeededEntry($entry);
-                $entry = Seeder::$plugin->seeder->populateFields($typeFields, $entry);
-                Craft::$app->getElements()->saveElement($entry);
+                if($entryType->fieldLayoutId) {
+                    $entry = Seeder::$plugin->seeder->populateFields($typeFields, $entry);
+                    Craft::$app->getElements()->saveElement($entry);
+                }
             }
         }
         Console::endProgress();
