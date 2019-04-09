@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-seeder",
     "description": "Easy entries seeder for Craft CMS",
     "type": "craft-plugin",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "keywords": [
         "craft",
         "cms",

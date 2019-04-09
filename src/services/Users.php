@@ -15,6 +15,7 @@ use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\User;
 use craft\errors\FieldNotFoundException;
+use craft\helpers\Console;
 use Faker\Factory;
 use Faker\Provider\Person;
 use studioespresso\seeder\Seeder;
@@ -63,7 +64,8 @@ class Users extends Component
         $faker = Factory::create();
 
         $fields = Craft::$app->fields->getFieldsByElementType('craft\elements\User');
-
+        $current = 0;
+        Console::startProgress($current, $count);
         for ($x = 1; $x <= $count; $x++) {
             $user = new User();
             $user->passwordResetRequired = true;
@@ -76,7 +78,10 @@ class Users extends Component
             Seeder::$plugin->seeder->populateFields($fields, $user);
             Craft::$app->elements->saveElement($user);
             Craft::$app->users->assignUserToGroups($user->id, [$userGroup->id]);
+            $current++;
+            Console::updateProgress($current, $count);
         }
+        Console::endProgress();
 
     }
 

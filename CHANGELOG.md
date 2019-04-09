@@ -1,5 +1,13 @@
 # Craft Seeder Changelog
 
+## 3.0.1 - 2019-04-09
+
+### Added
+- Progress bars when generating elements ([#4](https://github.com/studioespresso/craft3-seeder/issues/4))
+
+### Fixed
+- Fixed an issue with seeding categories ([#8](https://github.com/studioespresso/craft3-seeder/issues/8))
+- Fixed an issue with seeding entries for sections without fields
 
 ## 3.0.0 - 2019-02-05
 
