@@ -17,11 +17,13 @@ use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\MatrixBlock;
 use craft\elements\Tag;
+use craft\errors\FieldNotFoundException;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Categories;
 use craft\fields\Checkboxes;
 use craft\fields\Dropdown;
 use craft\fields\Email;
+use craft\fields\Entries;
 use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
@@ -36,8 +38,6 @@ use craft\records\VolumeFolder;
 use craft\services\Path;
 use Faker\Factory;
 use studioespresso\seeder\Seeder;
-use yii\db\Expression;
-use yii\db\ExpressionBuilder;
 
 /**
  * Fields Service
@@ -248,13 +248,14 @@ class Fields extends Component
      */
     public function Users($field, $entry)
     {
-        foreach ($field->sources as $source) {
-            d($source);
-        }
-        for ($x = 1; $x <= rand(1, $field->limit); $x++) {
+        throw new FieldNotFoundException('Users field not supported');
+    }
 
-        }
-        exit;
+    /**
+     * @param Entries $field
+     */
+    public function Entries($field, $entry) {
+        throw new FieldNotFoundException("Entries field not supported");
     }
 
     /**

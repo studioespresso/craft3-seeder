@@ -95,6 +95,7 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] Url
 - [x] Color
 - [x] Date
+- [ ] Entries 
 - [x] Categories
 - [x] Dropdown
 - [x] Checkboxes

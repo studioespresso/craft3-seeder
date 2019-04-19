@@ -10,14 +10,13 @@
 
 namespace studioespresso\seeder\services;
 
-use studioespresso\seeder\Seeder;
+use craft\base\Component;
+use craft\errors\FieldNotFoundException;
 use studioespresso\seeder\records\SeederAssetRecord;
+use studioespresso\seeder\records\SeederCategoryRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\records\SeederUserRecord;
-use studioespresso\seeder\records\SeederCategoryRecord;
-
-use Craft;
-use craft\base\Component;
+use studioespresso\seeder\Seeder;
 
 /**
  * SeederService Service
@@ -49,9 +48,12 @@ class SeederService extends Component
                     $fieldType = $fieldData[1];
                     $entryFields[$field['handle']] = Seeder::$plugin->$fieldProvider->$fieldType($field, $entry);
                 }
-
             } catch (FieldNotFoundException $e) {
-                dd($e);
+                if (Seeder::$plugin->getSettings()->debug) {
+                    dd($e);
+                } else {
+                    echo "Fieldtype not supported:" . $fieldType . "\n";
+                }
             }
         }
         $entry->setFieldValues($entryFields);
