@@ -1,5 +1,9 @@
 # Craft Seeder Changelog
 
+## 3.1.0 - Unreleased
+### Added
+- Added eachMatrixBlock` option, to seed a matrix with one of each blocktype in a random order ([#13](https://github.com/studioespresso/craft3-seeder/issues/13))
+
 ## 3.0.1 - 2019-04-09
 
 ### Added
