@@ -51,10 +51,20 @@ Once you're done building out the site, the plugin gives you an easy way to remo
 ```
 
 ## Configuration options
-### ``eachMatrixBlock`` -  Seed all blocktypes in a matrix field
+### ``eachMatrixBlock`` - Seed all blocktypes in a matrix field
 For a matrix, the plugin will get a random set of block types within the minimum & maximum amounts of blocks the field allows.
 
 With this setting set to `true`, we'll generate a each blocktype once in a random order. This is a good way to test pagebuilder/contentbuilder like fields 
+
+### `useLocalAssets` - Use assets already in your site to seed asset fields
+````php
+'useLocalAssets' => [
+    'volumeId' => 1,
+    'path' => 'test/'
+]
+````
+
+Add the array above to ``config/seeder.php`` to seed using assets from volume `1` and folder `test/`.
 
 ## Troubleshooting
 The most common problem with the plugins is getting the following error:
