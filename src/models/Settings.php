@@ -45,4 +45,6 @@ class Settings extends Model
 
     public $debug = false;
 
+    public $eachMatrixBlock = false;
+
 }

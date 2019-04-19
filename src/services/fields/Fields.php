@@ -182,11 +182,19 @@ class Fields extends Component
     public function Table($field, $entry)
     {
 
-        if($field->minRows) { $min = $field->minRows; } else { $min = 1; }
-        if($field->maxRows) { $max = $field->maxRows; } else { $max = $min + 10; }
+        if ($field->minRows) {
+            $min = $field->minRows;
+        } else {
+            $min = 1;
+        }
+        if ($field->maxRows) {
+            $max = $field->maxRows;
+        } else {
+            $max = $min + 10;
+        }
 
         $table = [];
-        for ($x = 0; $x <= rand($min, $max ); $x++) {
+        for ($x = 0; $x <= rand($min, $max); $x++) {
             foreach ($field->columns as $handle => $col) {
                 switch ($col['type']) {
                     case "singleline":
@@ -268,10 +276,10 @@ class Fields extends Component
         $folderUid = $folder[1];
         $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
 
-        if($field->limit) {
-        	$limit = $field->limit;
+        if ($field->limit) {
+            $limit = $field->limit;
         } else {
-        	$limit = 5;
+            $limit = 5;
         }
         for ($x = 1; $x <= rand(1, $limit); $x++) {
 
@@ -304,15 +312,27 @@ class Fields extends Component
     public function Matrix($field, $entry)
     {
         $types = $field->getBlockTypes();
-        $blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
+
         $blockIds = [];
         $types = array_map(function ($type) {
             return $type->id;
         }, $types);
 
-        for ($x = 1; $x <= $blockCount; $x++) {
-            $blockIds[] = $types[array_rand($types, 1)];
+        d($types);
+        if (Seeder::getInstance()->getSettings()->eachMatrixBlock) {
+            $blockCount = count($types);
+            d($blockCount);
+            for ($x = 0; $x < $blockCount; $x++) {
+                $blockIds[] = $types[$x];
+            }
+            shuffle($blockIds);
+        } else {
+            $blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
+            for ($x = 1; $x <= $blockCount; $x++) {
+                $blockIds[] = $types[array_rand($types, 1)];
+            }
         }
+
         foreach ($blockIds as $blockId) {
             $type = Craft::$app->matrix->getBlockTypeById($blockId);
             $blockTypeFields = Craft::$app->fields->getFieldsByLayoutId($type->fieldLayoutId);
