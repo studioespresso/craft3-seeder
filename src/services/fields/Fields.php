@@ -277,7 +277,9 @@ class Fields extends Component
                 'path' => $assetSettings['path']
             ]);
             $localAssets = Asset::find();
+            $localAssets->orderBy('RAND()');
             $localAssets->folderId($folder->id);
+            $localAssets->limit($limit);
             $assets = array_values($localAssets->ids());
 
         } else {
