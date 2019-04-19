@@ -47,4 +47,6 @@ class Settings extends Model
 
     public $eachMatrixBlock = false;
 
+    public $useLocalAssets = false;
+
 }

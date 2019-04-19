@@ -10,6 +10,8 @@
 
 namespace studioespresso\seeder\services\fields;
 
+use Craft;
+use craft\base\Component;
 use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
@@ -30,16 +32,12 @@ use craft\fields\Tags;
 use craft\fields\Url;
 use craft\fields\Users;
 use craft\helpers\Assets;
-use craft\models\VolumeFolder;
+use craft\records\VolumeFolder;
 use craft\services\Path;
-use craft\models\MatrixBlockType;
-use craft\web\UploadedFile;
 use Faker\Factory;
-use Faker\Provider\Text;
 use studioespresso\seeder\Seeder;
-
-use Craft;
-use craft\base\Component;
+use yii\db\Expression;
+use yii\db\ExpressionBuilder;
 
 /**
  * Fields Service
@@ -266,40 +264,53 @@ class Fields extends Component
     {
         $assets = [];
 
-        $path = new Path();
-        $dir = $path->getTempAssetUploadsPath() . '/seeder/';
-        if (!is_dir($dir)) {
-            mkdir($dir);
-        }
-
-        $folder = explode(':', $field->defaultUploadLocationSource);
-        $folderUid = $folder[1];
-        $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
-
         if ($field->limit) {
             $limit = $field->limit;
         } else {
             $limit = 5;
         }
-        for ($x = 1; $x <= rand(1, $limit); $x++) {
 
-            $image = $this->factory->imageUrl(1600, 1200, null, true);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $image);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            $picture = curl_exec($ch);
-            curl_close($ch);
+        if (Seeder::getInstance()->getSettings()->useLocalAssets) {
+            $assetSettings = Seeder::getInstance()->getSettings()->useLocalAssets;
+            $folder = VolumeFolder::findOne([
+                'volumeId' => $assetSettings['volumeId'],
+                'path' => $assetSettings['path']
+            ]);
+            $localAssets = Asset::find();
+            $localAssets->folderId($folder->id);
+            $assets = array_values($localAssets->ids());
 
-            $tmpImage = 'photo-' . rand() . '.jpg';
-            $tempPath = $dir . $tmpImage;
-            $saved = file_put_contents($tempPath, $picture);
+        } else {
+            $path = new Path();
+            $dir = $path->getTempAssetUploadsPath() . '/seeder/';
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
 
-            $result = $this->uploadNewAsset($assetFolder->id, $tempPath);
-            Seeder::$plugin->seeder->saveSeededAsset($result);
-            $assets[] = $result->id;
+            $folder = explode(':', $field->defaultUploadLocationSource);
+            $folderUid = $folder[1];
+            $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
+
+            for ($x = 1; $x <= rand(1, $limit); $x++) {
+
+                $image = $this->factory->imageUrl(1600, 1200, null, true);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $image);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                $picture = curl_exec($ch);
+                curl_close($ch);
+
+                $tmpImage = 'photo-' . rand() . '.jpg';
+                $tempPath = $dir . $tmpImage;
+                $saved = file_put_contents($tempPath, $picture);
+
+                $result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+                Seeder::$plugin->seeder->saveSeededAsset($result);
+                $assets[] = $result->id;
+            }
         }
 
         return $assets;
