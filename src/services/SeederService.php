@@ -105,8 +105,9 @@ class SeederService extends Component
         $fieldType = explode('\\', get_class($field));
         $fieldProvider = $fieldType[1];
         $fieldType = end($fieldType);
+
         if (class_exists('studioespresso\\seeder\\services\\fields\\' . $fieldProvider)) {
-            if (in_array($fieldType, get_class_methods(Seeder::$plugin->$fieldProvider))) {
+            if (in_array($fieldType, get_class_methods(Seeder::getInstance()->$fieldProvider))) {
                 return [$fieldProvider, $fieldType];
             } else {
                 if (Seeder::$plugin->getSettings()->debug) {
