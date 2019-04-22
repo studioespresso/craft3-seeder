@@ -25,16 +25,19 @@ use craft\base\Component;
  * @package   Seeder
  * @since     1.0.0
  */
-class Redactor extends Component  {
+class Redactor extends Component
+{
 
-	public $factory;
+    public $factory;
 
-	public function __construct() {
-		$this->factory = Factory::create();
-	}
+    public function __construct()
+    {
+        $this->factory = Factory::create();
+    }
 
-	public function Field($field, $entry) {
-		return Lorem::sentences(rand(5, 20), true);
-	}
+    public function Field($field, $entry)
+    {
+        return Lorem::sentences(rand(5, 20), true);
+    }
 
 }

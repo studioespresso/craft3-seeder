@@ -27,19 +27,22 @@ use verbb\supertable\fields\SuperTableField;
  * @package   Seeder
  * @since     1.0.0
  */
-class Supertable extends Component  {
+class Supertable extends Component
+{
 
     public $factory;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->factory = Factory::create();
     }
 
-    public function SuperTableField(SuperTableField $field, $entry) {
+    public function SuperTableField(SuperTableField $field, $entry)
+    {
         $types = $field->getBlockTypes();
         $fields = $field->getBlockTypeFields();
 
-        if($field->staticField) {
+        if ($field->staticField) {
             $blockCount = 1;
         } else {
             $blockCount = rand(!empty($field->minRows) ? $field->minRows : 1, !empty($field->maxRows) ? $field->maxRows : 6);
