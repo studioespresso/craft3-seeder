@@ -38,18 +38,6 @@
         "handle": "seeder",
         "hasCpSettings": false,
         "hasCpSection": true,
-        "components": {
-            "seeder": "studioespresso\\seeder\\services\\SeederService",
-            "weeder": "studioespresso\\seeder\\services\\Weeder",
-            "entries": "studioespresso\\seeder\\services\\Entries",
-            "categories": "studioespresso\\seeder\\services\\Categories",
-            "users": "studioespresso\\seeder\\services\\Users",
-            "fields": "studioespresso\\seeder\\services\\fields\\Fields",
-            "redactor": "studioespresso\\seeder\\services\\fields\\Redactor",
-            "ckeditor": "studioespresso\\seeder\\services\\fields\\CkEditor",
-            "supertable": "studioespresso\\seeder\\services\\fields\\Supertable",
-            "cta": "studioespresso\\seeder\\services\\fields\\CTA"
-        },
         "changelogUrl": "https://raw.githubusercontent.com/studioespresso/craft3-seeder/master/CHANGELOG.md",
         "class": "studioespresso\\seeder\\Seeder"
     }

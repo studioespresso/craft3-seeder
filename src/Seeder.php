@@ -11,9 +11,17 @@
 namespace studioespresso\seeder;
 
 use studioespresso\seeder\models\Settings;
+use studioespresso\seeder\services\Categories;
+use studioespresso\seeder\services\Entries;
+use studioespresso\seeder\services\fields\CkEditor;
+use studioespresso\seeder\services\fields\CTA;
+use studioespresso\seeder\services\fields\Fields;
+use studioespresso\seeder\services\fields\Redactor;
+use studioespresso\seeder\services\fields\Supertable;
 use studioespresso\seeder\services\SeederService;
 use studioespresso\seeder\services\Entries as EntriesService;
 use studioespresso\seeder\services\Categories as CategoriesService;
+use studioespresso\seeder\services\Users;
 use studioespresso\seeder\services\Weeder as WeederService;
 use studioespresso\seeder\services\Users as UsersService;
 use studioespresso\seeder\services\fields\Fields as FieldsService;
@@ -21,6 +29,7 @@ use studioespresso\seeder\services\fields\Redactor as RedactorService;
 use studioespresso\seeder\services\fields\CkEditor as CkEditorService;
 use studioespresso\seeder\services\fields\Supertable as SupertableService;
 use studioespresso\seeder\services\fields\CTA as CTAService;
+use studioespresso\seeder\services\fields\Positionfieldtype as PositionService;
 
 use Craft;
 use craft\base\Plugin;
@@ -47,7 +56,7 @@ use yii\base\Event;
  * @since     1.0.0
  * @property  SeederService seeder
  * @property  WeederService weeder
- * @property  EntriesService  entries
+ * @property  EntriesService entries
  * @property  CategoriesService categories
  * @property  UsersService users
  * @property  FieldsService fields
@@ -55,6 +64,7 @@ use yii\base\Event;
  * @property  CkEditorService ckeditor
  * @property  SupertableService supertable
  * @property  CTAService cta
+ * @property  PositionService positionfieldtype
  * @property  Settings $settings
  * @method    Settings getSettings()
  */
@@ -84,23 +94,38 @@ class Seeder extends Plugin
     // Public Methods
     // =========================================================================
 
-    public function init() {
-	    parent::init();
+    public function init()
+    {
+        parent::init();
 
-	    self::$plugin = $this;
+        self::$plugin = $this;
 
-	    Event::on(
-		    UrlManager::class,
-		    UrlManager::EVENT_REGISTER_CP_URL_RULES,
-		    function (RegisterUrlRulesEvent $event) {
-			    $event->rules['seeder'] = 'seeder/seeder/index';
-		    }
-	    );
+        $this->components = [
+            "seeder" => SeederService::class,
+            "weeder" => WeederService::class,
+            "entries" => Entries::class,
+            "categories" => Categories::class,
+            "users" => Users::class,
+            "fields" => Fields::class,
+            "redactor" => Redactor::class,
+            "ckeditor" => CkEditor::class,
+            "supertable" => Supertable::class,
+            "cta" => CTA::class,
+            "positionfieldtype" => PositionService::class,
+        ];
 
-	    // Add in our console commands
-	    if ( Craft::$app instanceof ConsoleApplication ) {
-		    $this->controllerNamespace = 'studioespresso\seeder\console\controllers';
-	    }
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_CP_URL_RULES,
+            function (RegisterUrlRulesEvent $event) {
+                $event->rules['seeder'] = 'seeder/seeder/index';
+            }
+        );
+
+        // Add in our console commands
+        if (Craft::$app instanceof ConsoleApplication) {
+            $this->controllerNamespace = 'studioespresso\seeder\console\controllers';
+        }
     }
 
     // Protected Methods
