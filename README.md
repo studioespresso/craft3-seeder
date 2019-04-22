@@ -115,3 +115,4 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] [Redactor](https://github.com/craftcms/redactor)
 - [x] [CKEditor](https://github.com/craftcms/ckeditor)
 - [x] [Super Table](https://github.com/verbb/super-table)
+- [x] [Position field](https://github.com/Rias500/craft-position-fieldtype)
