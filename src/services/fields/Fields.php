@@ -277,6 +277,7 @@ class Fields extends Component
                 'volumeId' => $assetSettings['volumeId'],
                 'path' => $assetSettings['path']
             ]);
+
             $localAssets = Asset::find();
             $localAssets->orderBy('RAND()');
             $localAssets->folderId($folder->id);
@@ -332,10 +333,8 @@ class Fields extends Component
             return $type->id;
         }, $types);
 
-        d($types);
         if (Seeder::getInstance()->getSettings()->eachMatrixBlock) {
             $blockCount = count($types);
-            d($blockCount);
             for ($x = 0; $x < $blockCount; $x++) {
                 $blockIds[] = $types[$x];
             }
