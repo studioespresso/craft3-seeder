@@ -10,9 +10,6 @@
 
 namespace studioespresso\seeder\models;
 
-use studioespresso\seeder\Seeder;
-
-use Craft;
 use craft\base\Model;
 
 /**

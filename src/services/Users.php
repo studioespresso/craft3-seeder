@@ -10,19 +10,12 @@
 
 namespace studioespresso\seeder\services;
 
-use craft\elements\Asset;
-use craft\elements\Category;
-use craft\elements\Entry;
-use craft\elements\User;
-use craft\errors\FieldNotFoundException;
-use craft\helpers\Console;
-use Faker\Factory;
-use Faker\Provider\Person;
-use studioespresso\seeder\Seeder;
-
 use Craft;
 use craft\base\Component;
-use yii\base\Model;
+use craft\elements\User;
+use craft\helpers\Console;
+use Faker\Factory;
+use studioespresso\seeder\Seeder;
 
 /**
  * Users Service

@@ -65,8 +65,9 @@ class SeederService extends Component
     /**
      * @param Entry $entry
      */
-    public function saveSeededEntry($entry) {
-        $record          = new SeederEntryRecord();
+    public function saveSeededEntry($entry)
+    {
+        $record = new SeederEntryRecord();
         $record->entryUid = $entry->uid;
         $record->section = $entry->sectionId;
         $record->save();
@@ -75,7 +76,8 @@ class SeederService extends Component
     /**
      * @param Asset $asset
      */
-    public function saveSeededAsset($asset) {
+    public function saveSeededAsset($asset)
+    {
         $record = new SeederAssetRecord();
         $record->assetUid = $asset->uid;
         $record->save();
@@ -84,7 +86,8 @@ class SeederService extends Component
     /**
      * @param User $user
      */
-    public function saveSeededUser($user) {
+    public function saveSeededUser($user)
+    {
         $record = new SeederUserRecord();
         $record->userUid = $user->uid;
         $record->save();
@@ -93,7 +96,8 @@ class SeederService extends Component
     /**
      * @param Asset $asset
      */
-    public function saveSeededCategory($category) {
+    public function saveSeededCategory($category)
+    {
         $record = new SeederCategoryRecord();
         $record->section = $category->groupId;
         $record->categoryUid = $category->uid;

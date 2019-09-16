@@ -10,12 +10,10 @@
 
 namespace studioespresso\seeder\console\controllers;
 
-use studioespresso\seeder\Seeder;
-
 use Craft;
+use studioespresso\seeder\Seeder;
 use studioespresso\seeder\services\Seeder_EntriesService;
 use yii\console\Controller;
-use yii\helpers\Console;
 
 /**
  * Seeder for Craft CMS 3.x - by Studio Espresso
@@ -52,16 +50,18 @@ class GenerateController extends Controller
     // =========================================================================
 
 
-    public function options($actionId){
+    public function options($actionId)
+    {
         switch ($actionId) {
             case 'entries':
-                return ['section','count'];
+                return ['section', 'count'];
             case 'categories':
-                return ['group','count'];
+                return ['group', 'count'];
             case 'users':
-                return ['group','count'];
+                return ['group', 'count'];
         }
     }
+
     /**
      * Generates entries for the specified section
      *
@@ -72,7 +72,7 @@ class GenerateController extends Controller
      */
     public function actionEntries()
     {
-        if(!$this->section) {
+        if (!$this->section) {
             echo "Section handle or id missing, please specify\n";
             return;
         }
@@ -81,25 +81,25 @@ class GenerateController extends Controller
         return $result;
     }
 
-	/**
-	 * Generates categories for the specified group
-	 *
-	 * The first line of this method docblock is displayed as the description
-	 * of the Console Command in ./craft help
-	 *
-	 * @return mixed
-	 */
-	public function actionCategories()
-	{
+    /**
+     * Generates categories for the specified group
+     *
+     * The first line of this method docblock is displayed as the description
+     * of the Console Command in ./craft help
+     *
+     * @return mixed
+     */
+    public function actionCategories()
+    {
 
-        if(!$this->group) {
+        if (!$this->group) {
             echo "Group handle or id missing, please specify\n";
             return;
         }
-		$result = Seeder::$plugin->categories->generate($this->group, $this->count);
+        $result = Seeder::$plugin->categories->generate($this->group, $this->count);
 
-		return $result;
-	}
+        return $result;
+    }
 
     /**
      * Generates users for the specified usergroup
@@ -116,7 +116,7 @@ class GenerateController extends Controller
             return;
         }
 
-        if(!$this->group) {
+        if (!$this->group) {
             echo "Group handle or id missing, please specify\n";
             return;
         }
@@ -132,35 +132,36 @@ class GenerateController extends Controller
      *
      * @return mixed
      */
-    public function actionSet($name = 'default') {
-        if(!array_key_exists($name, Seeder::$plugin->getSettings()->sets)) {
+    public function actionSet($name = 'default')
+    {
+        if (!array_key_exists($name, Seeder::$plugin->getSettings()->sets)) {
             echo "Set not found\n";
             return;
         }
         $settings = Seeder::$plugin->getSettings()->sets[$name];
-        foreach($settings as $type => $option) {
+        foreach ($settings as $type => $option) {
             d($type, $option);
             switch ($type) {
                 case 'Users':
-                    if(is_array($option)) {
+                    if (is_array($option)) {
                         foreach ($option as $group => $count) {
                             $result = Seeder::$plugin->users->generate($group, $count);
-                            if($result) {
+                            if ($result) {
                                 echo "Seeded " . $count . " entries in " . $result . "\n";
                             }
                         }
                     }
                     break;
                 case 'Entries':
-                    if(is_array($option)) {
+                    if (is_array($option)) {
                         foreach ($option as $section => $count) {
                             $result = Seeder::$plugin->entries->generate($section, $count);
-                            if($result) {
+                            if ($result) {
                                 echo "Seeded " . $count . " entries in " . $result . "\n";
                             }
                         }
                     }
-                break;
+                    break;
             }
         }
     }
