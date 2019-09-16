@@ -46,6 +46,12 @@ class GenerateController extends Controller
      */
     public $count = 20;
 
+    /**
+     * Site ID of the site in which you want to seed entries
+     * @var Integer
+     */
+    public $siteId = 1;
+
     // Public Methods
     // =========================================================================
 
@@ -54,7 +60,7 @@ class GenerateController extends Controller
     {
         switch ($actionId) {
             case 'entries':
-                return ['section', 'count'];
+                return ['section', 'siteId', 'count'];
             case 'categories':
                 return ['group', 'count'];
             case 'users':
@@ -77,7 +83,7 @@ class GenerateController extends Controller
             return;
         }
 
-        $result = Seeder::$plugin->entries->generate($this->section, $this->count);
+        $result = Seeder::$plugin->entries->generate($this->section, $this->siteId, $this->count);
         return $result;
     }
 

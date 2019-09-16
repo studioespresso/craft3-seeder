@@ -34,13 +34,15 @@ class Entries extends Component
 {
     /**
      * @param null $sectionId
+     * @param $siteId
+     * @param $count
      *
      * @throws \Throwable
      * @throws \craft\errors\ElementNotFoundException
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function generate($section = null, $count)
+    public function generate($section = null, $siteId,  $count)
     {
         if (ctype_digit($section)) {
             $section = Craft::$app->sections->getSectionById((int)$section);
@@ -67,6 +69,7 @@ class Entries extends Component
                 }
                 $entry = new Entry([
                     'sectionId' => (int)$section->id,
+                    'siteId' => $siteId ? $siteId : Craft::$app->getSites()->getPrimarySite()->id,
                     'typeId' => $entryType->id,
                     'title' => Seeder::$plugin->fields->Title(),
                 ]);
