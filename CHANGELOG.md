@@ -5,6 +5,8 @@
 - Added `eachMatrixBlock` option, to seed a matrix with one of each blocktype in a random order ([#13](https://github.com/studioespresso/craft3-seeder/issues/13))
 - Added`useLocalAssets` option, to seed asset fields with assets from a specified volume & folder, to be used in case you have your own set of test images.
 - Added support for [rias/craft-position-fieldtype](https://github.com/Rias500/craft-position-fieldtype)
+- Added support for seeding entries for specific sites by using a `siteId` parameter
+
 ## 3.0.1 - 2019-04-09
 
 ### Added
