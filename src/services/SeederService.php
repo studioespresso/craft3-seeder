@@ -10,14 +10,13 @@
 
 namespace studioespresso\seeder\services;
 
-use studioespresso\seeder\Seeder;
+use craft\base\Component;
+use craft\errors\FieldNotFoundException;
 use studioespresso\seeder\records\SeederAssetRecord;
+use studioespresso\seeder\records\SeederCategoryRecord;
 use studioespresso\seeder\records\SeederEntryRecord;
 use studioespresso\seeder\records\SeederUserRecord;
-use studioespresso\seeder\records\SeederCategoryRecord;
-
-use Craft;
-use craft\base\Component;
+use studioespresso\seeder\Seeder;
 
 /**
  * SeederService Service
@@ -49,9 +48,12 @@ class SeederService extends Component
                     $fieldType = $fieldData[1];
                     $entryFields[$field['handle']] = Seeder::$plugin->$fieldProvider->$fieldType($field, $entry);
                 }
-
             } catch (FieldNotFoundException $e) {
-                dd($e);
+                if (Seeder::$plugin->getSettings()->debug) {
+                    dd($e);
+                } else {
+                    echo "Fieldtype not supported:" . $fieldType . "\n";
+                }
             }
         }
         $entry->setFieldValues($entryFields);
@@ -63,8 +65,9 @@ class SeederService extends Component
     /**
      * @param Entry $entry
      */
-    public function saveSeededEntry($entry) {
-        $record          = new SeederEntryRecord();
+    public function saveSeededEntry($entry)
+    {
+        $record = new SeederEntryRecord();
         $record->entryUid = $entry->uid;
         $record->section = $entry->sectionId;
         $record->save();
@@ -73,7 +76,8 @@ class SeederService extends Component
     /**
      * @param Asset $asset
      */
-    public function saveSeededAsset($asset) {
+    public function saveSeededAsset($asset)
+    {
         $record = new SeederAssetRecord();
         $record->assetUid = $asset->uid;
         $record->save();
@@ -82,7 +86,8 @@ class SeederService extends Component
     /**
      * @param User $user
      */
-    public function saveSeededUser($user) {
+    public function saveSeededUser($user)
+    {
         $record = new SeederUserRecord();
         $record->userUid = $user->uid;
         $record->save();
@@ -91,7 +96,8 @@ class SeederService extends Component
     /**
      * @param Asset $asset
      */
-    public function saveSeededCategory($category) {
+    public function saveSeededCategory($category)
+    {
         $record = new SeederCategoryRecord();
         $record->section = $category->groupId;
         $record->categoryUid = $category->uid;
@@ -103,8 +109,9 @@ class SeederService extends Component
         $fieldType = explode('\\', get_class($field));
         $fieldProvider = $fieldType[1];
         $fieldType = end($fieldType);
+
         if (class_exists('studioespresso\\seeder\\services\\fields\\' . $fieldProvider)) {
-            if (in_array($fieldType, get_class_methods(Seeder::$plugin->$fieldProvider))) {
+            if (in_array($fieldType, get_class_methods(Seeder::getInstance()->$fieldProvider))) {
                 return [$fieldProvider, $fieldType];
             } else {
                 if (Seeder::$plugin->getSettings()->debug) {

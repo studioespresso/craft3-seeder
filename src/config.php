@@ -9,6 +9,8 @@
  */
 
 return [
+    "eachMatrixBlock" => false,
+    "useLocalAssets" => false,
     "sets" => [
         'default' => [
             'Users' => [

@@ -10,9 +10,6 @@
 
 namespace studioespresso\seeder\models;
 
-use studioespresso\seeder\Seeder;
-
-use Craft;
 use craft\base\Model;
 
 /**
@@ -44,5 +41,9 @@ class Settings extends Model
     public $sets;
 
     public $debug = false;
+
+    public $eachMatrixBlock = false;
+
+    public $useLocalAssets = false;
 
 }

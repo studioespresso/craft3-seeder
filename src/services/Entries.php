@@ -10,16 +10,11 @@
 
 namespace studioespresso\seeder\services;
 
-use craft\elements\Asset;
-use craft\elements\Entry;
-use craft\errors\FieldNotFoundException;
-use Faker\Factory;
-use Faker\Provider\Person;
-use studioespresso\seeder\Seeder;
-
 use Craft;
 use craft\base\Component;
-use yii\base\Model;
+use craft\elements\Entry;
+use Faker\Factory;
+use studioespresso\seeder\Seeder;
 use yii\helpers\Console;
 
 /**
@@ -39,13 +34,15 @@ class Entries extends Component
 {
     /**
      * @param null $sectionId
+     * @param $siteId
+     * @param $count
      *
      * @throws \Throwable
      * @throws \craft\errors\ElementNotFoundException
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function generate($section = null, $count)
+    public function generate($section = null, $siteId,  $count)
     {
         if (ctype_digit($section)) {
             $section = Craft::$app->sections->getSectionById((int)$section);
@@ -67,17 +64,18 @@ class Entries extends Component
             for ($x = 1; $x <= $count; $x++) {
                 $current++;
                 Console::updateProgress($current, $count);
-                if($entryType->fieldLayoutId) {
+                if ($entryType->fieldLayoutId) {
                     $typeFields = Craft::$app->fields->getFieldsByLayoutId($entryType->getFieldLayoutId());
                 }
                 $entry = new Entry([
                     'sectionId' => (int)$section->id,
+                    'siteId' => $siteId ? $siteId : Craft::$app->getSites()->getPrimarySite()->id,
                     'typeId' => $entryType->id,
                     'title' => Seeder::$plugin->fields->Title(),
                 ]);
                 Craft::$app->getElements()->saveElement($entry);
                 Seeder::$plugin->seeder->saveSeededEntry($entry);
-                if($entryType->fieldLayoutId) {
+                if ($entryType->fieldLayoutId) {
                     $entry = Seeder::$plugin->seeder->populateFields($typeFields, $entry);
                     Craft::$app->getElements()->saveElement($entry);
                 }

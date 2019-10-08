@@ -25,10 +25,13 @@ To install the plugin, follow these instructions.
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for "Seeder".
 
-#### Entries (Section ID/handle, count)
+### Usage
+
+#### Entries (Section ID/handle, siteId, count)
 
 Use the command below, followed by the ``--section`` option and the ``--number`` of entries you want to create (defaults to 20 if ommited). This command works with both section ID and handle. 
 
+You can also add a `siteId` parameter to seed entries for a specific site. This will use the default site as a fallback.
 ```Shell
 ./craft seeder/generate/entries --section=news --count=15
 ```
@@ -49,6 +52,22 @@ Once you're done building out the site, the plugin gives you an easy way to remo
 ```Shell
 ./craft seeder/clean-up/all
 ```
+
+## Configuration options
+### ``eachMatrixBlock`` - Seed all blocktypes in a matrix field
+For a matrix, the plugin will get a random set of block types within the minimum & maximum amounts of blocks the field allows.
+
+With this setting set to `true`, we'll generate a block of each blocktype once in a random order. This is a good way to test pagebuilder/contentbuilder-like fields.
+
+### `useLocalAssets` - Use assets already in your site to seed asset fields
+````php
+'useLocalAssets' => [
+    'volumeId' => 1,
+    'path' => 'test/'
+]
+````
+
+Add the array above to ``config/seeder.php`` to seed using assets from volume `1` and folder `test/`.
 
 ## Troubleshooting
 The most common problem with the plugins is getting the following error:
@@ -79,6 +98,7 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] Url
 - [x] Color
 - [x] Date
+- [ ] Entries 
 - [x] Categories
 - [x] Dropdown
 - [x] Checkboxes
@@ -98,3 +118,4 @@ If you're running MAMP/XAMP, you should use `127.0.0.1` as hostname instead of `
 - [x] [Redactor](https://github.com/craftcms/redactor)
 - [x] [CKEditor](https://github.com/craftcms/ckeditor)
 - [x] [Super Table](https://github.com/verbb/super-table)
+- [x] [Position field](https://github.com/Rias500/craft-position-fieldtype)

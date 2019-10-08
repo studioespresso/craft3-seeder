@@ -7,18 +7,18 @@ use craft\db\ActiveRecord;
 class SeederCategoryRecord extends ActiveRecord
 {
 
-	// Props
-	// =========================================================================
+    // Props
+    // =========================================================================
 
-	public static $tableName = '{{%seeder_categories}}';
+    public static $tableName = '{{%seeder_categories}}';
 
-	/**
-	 * @inheritdoc
-	 *
-	 * @return string
-	 */
-	public static function tableName (): string
-	{
-		return self::$tableName;
-	}
+    /**
+     * @inheritdoc
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return self::$tableName;
+    }
 }

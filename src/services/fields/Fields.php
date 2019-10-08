@@ -10,16 +10,20 @@
 
 namespace studioespresso\seeder\services\fields;
 
+use Craft;
+use craft\base\Component;
 use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\MatrixBlock;
 use craft\elements\Tag;
+use craft\errors\FieldNotFoundException;
 use craft\fields\Assets as AssetsField;
 use craft\fields\Categories;
 use craft\fields\Checkboxes;
 use craft\fields\Dropdown;
 use craft\fields\Email;
+use craft\fields\Entries;
 use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
@@ -30,16 +34,10 @@ use craft\fields\Tags;
 use craft\fields\Url;
 use craft\fields\Users;
 use craft\helpers\Assets;
-use craft\models\VolumeFolder;
+use craft\records\VolumeFolder;
 use craft\services\Path;
-use craft\models\MatrixBlockType;
-use craft\web\UploadedFile;
 use Faker\Factory;
-use Faker\Provider\Text;
 use studioespresso\seeder\Seeder;
-
-use Craft;
-use craft\base\Component;
 
 /**
  * Fields Service
@@ -182,11 +180,19 @@ class Fields extends Component
     public function Table($field, $entry)
     {
 
-        if($field->minRows) { $min = $field->minRows; } else { $min = 1; }
-        if($field->maxRows) { $max = $field->maxRows; } else { $max = $min + 10; }
+        if ($field->minRows) {
+            $min = $field->minRows;
+        } else {
+            $min = 1;
+        }
+        if ($field->maxRows) {
+            $max = $field->maxRows;
+        } else {
+            $max = $min + 10;
+        }
 
         $table = [];
-        for ($x = 0; $x <= rand($min, $max ); $x++) {
+        for ($x = 0; $x <= rand($min, $max); $x++) {
             foreach ($field->columns as $handle => $col) {
                 switch ($col['type']) {
                     case "singleline":
@@ -242,13 +248,14 @@ class Fields extends Component
      */
     public function Users($field, $entry)
     {
-        foreach ($field->sources as $source) {
-            d($source);
-        }
-        for ($x = 1; $x <= rand(1, $field->limit); $x++) {
+        throw new FieldNotFoundException('Users field not supported');
+    }
 
-        }
-        exit;
+    /**
+     * @param Entries $field
+     */
+    public function Entries($field, $entry) {
+        throw new FieldNotFoundException("Entries field not supported");
     }
 
     /**
@@ -258,40 +265,56 @@ class Fields extends Component
     {
         $assets = [];
 
-        $path = new Path();
-        $dir = $path->getTempAssetUploadsPath() . '/seeder/';
-        if (!is_dir($dir)) {
-            mkdir($dir);
-        }
-
-        $folder = explode(':', $field->defaultUploadLocationSource);
-        $folderUid = $folder[1];
-        $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
-
-        if($field->limit) {
-        	$limit = $field->limit;
+        if ($field->limit) {
+            $limit = $field->limit;
         } else {
-        	$limit = 5;
+            $limit = 5;
         }
-        for ($x = 1; $x <= rand(1, $limit); $x++) {
 
-            $image = $this->factory->imageUrl(1600, 1200, null, true);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $image);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-            $picture = curl_exec($ch);
-            curl_close($ch);
+        if (Seeder::getInstance()->getSettings()->useLocalAssets) {
+            $assetSettings = Seeder::getInstance()->getSettings()->useLocalAssets;
+            $folder = VolumeFolder::findOne([
+                'volumeId' => $assetSettings['volumeId'],
+                'path' => $assetSettings['path']
+            ]);
 
-            $tmpImage = 'photo-' . rand() . '.jpg';
-            $tempPath = $dir . $tmpImage;
-            $saved = file_put_contents($tempPath, $picture);
+            $localAssets = Asset::find();
+            $localAssets->orderBy('RAND()');
+            $localAssets->folderId($folder->id);
+            $localAssets->limit($limit);
+            $assets = array_values($localAssets->ids());
 
-            $result = $this->uploadNewAsset($assetFolder->id, $tempPath);
-            Seeder::$plugin->seeder->saveSeededAsset($result);
-            $assets[] = $result->id;
+        } else {
+            $path = new Path();
+            $dir = $path->getTempAssetUploadsPath() . '/seeder/';
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+
+            $folder = explode(':', $field->defaultUploadLocationSource);
+            $folderUid = $folder[1];
+            $assetFolder = Craft::$app->volumes->getVolumeByUid($folderUid);
+
+            for ($x = 1; $x <= rand(1, $limit); $x++) {
+
+                $image = $this->factory->imageUrl(1600, 1200, null, true);
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $image);
+                curl_setopt($ch, CURLOPT_HEADER, 0);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+                $picture = curl_exec($ch);
+                curl_close($ch);
+
+                $tmpImage = 'photo-' . rand() . '.jpg';
+                $tempPath = $dir . $tmpImage;
+                $saved = file_put_contents($tempPath, $picture);
+
+                $result = $this->uploadNewAsset($assetFolder->id, $tempPath);
+                Seeder::$plugin->seeder->saveSeededAsset($result);
+                $assets[] = $result->id;
+            }
         }
 
         return $assets;
@@ -304,15 +327,25 @@ class Fields extends Component
     public function Matrix($field, $entry)
     {
         $types = $field->getBlockTypes();
-        $blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
+
         $blockIds = [];
         $types = array_map(function ($type) {
             return $type->id;
         }, $types);
 
-        for ($x = 1; $x <= $blockCount; $x++) {
-            $blockIds[] = $types[array_rand($types, 1)];
+        if (Seeder::getInstance()->getSettings()->eachMatrixBlock) {
+            $blockCount = count($types);
+            for ($x = 0; $x < $blockCount; $x++) {
+                $blockIds[] = $types[$x];
+            }
+            shuffle($blockIds);
+        } else {
+            $blockCount = rand(!empty($field->minBlocks) ? $field->minBlocks : 1, !empty($field->maxBlocks) ? $field->maxBlocks : 6);
+            for ($x = 1; $x <= $blockCount; $x++) {
+                $blockIds[] = $types[array_rand($types, 1)];
+            }
         }
+
         foreach ($blockIds as $blockId) {
             $type = Craft::$app->matrix->getBlockTypeById($blockId);
             $blockTypeFields = Craft::$app->fields->getFieldsByLayoutId($type->fieldLayoutId);

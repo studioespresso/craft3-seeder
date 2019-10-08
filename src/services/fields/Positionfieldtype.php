@@ -13,6 +13,7 @@ namespace studioespresso\seeder\services\fields;
 use Faker\Factory;
 use Faker\Provider\Base;
 use Faker\Provider\Lorem;
+use rias\positionfieldtype\fields\Position;
 use studioespresso\seeder\Seeder;
 
 use Craft;
@@ -25,7 +26,7 @@ use craft\base\Component;
  * @package   Seeder
  * @since     1.0.0
  */
-class Redactor extends Component
+class Positionfieldtype extends Component
 {
 
     public $factory;
@@ -35,9 +36,9 @@ class Redactor extends Component
         $this->factory = Factory::create();
     }
 
-    public function Field($field, $entry)
+    public function Position(Position $field, $entry)
     {
-        return Lorem::sentences(rand(5, 20), true);
+        return array_rand(array_filter($field->options));
     }
 
 }
