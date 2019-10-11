@@ -10,6 +10,7 @@
 
 namespace studioespresso\seeder\services;
 
+use Craft;
 use craft\base\Component;
 use craft\errors\FieldNotFoundException;
 use studioespresso\seeder\records\SeederAssetRecord;
@@ -52,7 +53,7 @@ class SeederService extends Component
                 if (Seeder::$plugin->getSettings()->debug) {
                     dd($e);
                 } else {
-                    echo "Fieldtype not supported:" . $fieldType . "\n";
+                    Craft::warning("Fieldtype not supported: $fieldType", __CLASS__);
                 }
             }
         }
@@ -117,14 +118,14 @@ class SeederService extends Component
                 if (Seeder::$plugin->getSettings()->debug) {
                     throw new FieldNotFoundException('Fieldtype not supported: ' . $fieldType);
                 } else {
-                    echo "Fieldtype not supported:" . $fieldType . "\n";
+                    Craft::warning("Fieldtype not supported: $fieldType", __CLASS__);
                 }
             }
         } else {
             if (Seeder::$plugin->getSettings()->debug) {
                 throw new FieldNotFoundException('Fieldtype not supported: ' . $fieldType);
             } else {
-                echo "Fieldtype not supported:" . $fieldType . "\n";
+                Craft::warning("Fieldtype not supported: $fieldType", __CLASS__);
             }
         }
     }

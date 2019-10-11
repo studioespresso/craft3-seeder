@@ -1,6 +1,11 @@
 # Craft Seeder Changelog
 
-## 3.1.0 - Unreleased
+## 3.1.1 - 2019-10-11
+### Fixed
+- `useLocalAssets` now also works with images in the root of the volume
+- Unsupported fields are now logged instead of show in console
+
+## 3.1.0 - 2019-10-08
 ### Added
 - Added `eachMatrixBlock` option, to seed a matrix with one of each blocktype in a random order ([#13](https://github.com/studioespresso/craft3-seeder/issues/13))
 - Added`useLocalAssets` option, to seed asset fields with assets from a specified volume & folder, to be used in case you have your own set of test images.

@@ -254,7 +254,8 @@ class Fields extends Component
     /**
      * @param Entries $field
      */
-    public function Entries($field, $entry) {
+    public function Entries($field, $entry)
+    {
         throw new FieldNotFoundException("Entries field not supported");
     }
 
@@ -275,7 +276,7 @@ class Fields extends Component
             $assetSettings = Seeder::getInstance()->getSettings()->useLocalAssets;
             $folder = VolumeFolder::findOne([
                 'volumeId' => $assetSettings['volumeId'],
-                'path' => $assetSettings['path']
+                'path' => $assetSettings['path'] ?? ''
             ]);
 
             $localAssets = Asset::find();
