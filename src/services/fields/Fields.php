@@ -107,9 +107,10 @@ class Fields extends Component
      */
     public function Categories($field, $entry)
     {
-        $catGroup = Craft::$app->getCategories()->getGroupById($field->groupId);
+        $source = explode(":", $field->source);
+        $catGroup = Craft::$app->getCategories()->getGroupByUid($source[1]);
         $cats = Category::find()
-            ->groupId($field->groupId)
+            ->groupId($catGroup->id)
             ->ids();
 
         $categories = [];
