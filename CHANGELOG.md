@@ -1,5 +1,9 @@
 # Craft Seeder Changelog
 
+## 3.1.2 - Unreleased
+### Fixed
+- Fixed the seeding of category fields ([#11](https://github.com/studioespresso/craft3-seeder/issues/11))
+
 ## 3.1.1 - 2019-10-11
 ### Fixed
 - `useLocalAssets` now also works with images in the root of the volume
