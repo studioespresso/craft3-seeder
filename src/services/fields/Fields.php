@@ -256,10 +256,13 @@ class Fields extends Component
 
     /**
      * @param Entries $field
+     * @param Entry $entry
      */
     public function Entries($field, $entry)
     {
-        throw new FieldNotFoundException("Entries field not supported");
+        $criteria = Entry::find($field->getSettings());
+        $criteria->limit = $field->limit;
+        return $criteria->ids();
     }
 
     /**
