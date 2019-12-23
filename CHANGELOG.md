@@ -1,6 +1,10 @@
 # Craft Seeder Changelog
 
-## 3.1.2 - Unreleased
+## 3.2.0 - 2019-12-23
+### Added
+- support for Entries fields
+- support for [statikbe/craft-config-values](https://github.com/statikbe/craft-config-values)
+- better support for [statikbe/craft-cta-field](https://github.com/statikbe/craft3-ctafield)
 ### Fixed
 - Fixed the seeding of category fields ([#11](https://github.com/studioespresso/craft3-seeder/issues/11))
 
