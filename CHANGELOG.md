@@ -1,5 +1,13 @@
 # Craft Seeder Changelog
 
+## 3.2.0 - 2019-12-23
+### Added
+- support for Entries fields
+- support for [statikbe/craft-config-values](https://github.com/statikbe/craft-config-values)
+- better support for [statikbe/craft-cta-field](https://github.com/statikbe/craft3-ctafield)
+### Fixed
+- Fixed the seeding of category fields ([#11](https://github.com/studioespresso/craft3-seeder/issues/11))
+
 ## 3.1.1 - 2019-10-11
 ### Fixed
 - `useLocalAssets` now also works with images in the root of the volume

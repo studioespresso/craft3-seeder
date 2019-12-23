@@ -14,6 +14,8 @@ use studioespresso\seeder\models\Settings;
 use studioespresso\seeder\services\Categories;
 use studioespresso\seeder\services\Entries;
 use studioespresso\seeder\services\fields\CkEditor;
+use studioespresso\seeder\services\fields\configvaluesfield;
+use studioespresso\seeder\services\fields\ConfigValuesService;
 use studioespresso\seeder\services\fields\CTA;
 use studioespresso\seeder\services\fields\Fields;
 use studioespresso\seeder\services\fields\Redactor;
@@ -64,6 +66,7 @@ use yii\base\Event;
  * @property  CkEditorService ckeditor
  * @property  SupertableService supertable
  * @property  CTAService cta
+ * @property  configvaluesfield configvaluesfield
  * @property  PositionService positionfieldtype
  * @property  Settings $settings
  * @method    Settings getSettings()
@@ -111,6 +114,7 @@ class Seeder extends Plugin
             "ckeditor" => CkEditor::class,
             "supertable" => Supertable::class,
             "cta" => CTA::class,
+            "configvaluesfield" => configvaluesfield::class,
             "positionfieldtype" => PositionService::class,
         ];
 

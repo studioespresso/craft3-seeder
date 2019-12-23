@@ -107,14 +107,17 @@ class Fields extends Component
      */
     public function Categories($field, $entry)
     {
-        $catGroup = Craft::$app->getCategories()->getGroupById($field->groupId);
+        $source = explode(":", $field->source);
+        $catGroup = Craft::$app->getCategories()->getGroupByUid($source[1]);
         $cats = Category::find()
-            ->groupId($field->groupId)
+            ->groupId($catGroup->id)
             ->ids();
 
         $categories = [];
-        for ($x = 1; $x <= $field->branchLimit; $x++) {
-            $categories[] = $cats[array_rand($cats)];
+        if ($cats) {
+            for ($x = 1; $x <= $field->branchLimit; $x++) {
+                $categories[] = $cats[array_rand($cats)];
+            }
         }
         return $categories;
     }
@@ -253,10 +256,13 @@ class Fields extends Component
 
     /**
      * @param Entries $field
+     * @param Entry $entry
      */
     public function Entries($field, $entry)
     {
-        throw new FieldNotFoundException("Entries field not supported");
+        $criteria = Entry::find($field->getSettings());
+        $criteria->limit = $field->limit;
+        return $criteria->ids();
     }
 
     /**

@@ -66,10 +66,12 @@ class CTA extends Component
             'target' => $field->allowTarget ? $this->factory->boolean : null,
             'class' => array_rand($classes),
         ];
-
-        if (isset($field->typeSettings["url"])) {
+        if (in_array('url', $field->allowedLinkNames)) {
             $attr['type'] = 'url';
             $attr['value'] = $this->factory->url;
+        } elseif (in_array('email', $field->allowedLinkNames)) {
+            $attr['type'] = 'email';
+            $attr['value'] = $this->factory->email;
         }
         return new \statikbe\cta\models\CTA($attr);
     }
