@@ -114,8 +114,10 @@ class Fields extends Component
             ->ids();
 
         $categories = [];
-        for ($x = 1; $x <= $field->branchLimit; $x++) {
-            $categories[] = $cats[array_rand($cats)];
+        if ($cats) {
+            for ($x = 1; $x <= $field->branchLimit; $x++) {
+                $categories[] = $cats[array_rand($cats)];
+            }
         }
         return $categories;
     }
