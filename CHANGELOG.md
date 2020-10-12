@@ -1,5 +1,9 @@
 # Craft Seeder Changelog
 
+## 3.3.0 - 2029-10-12
+### Added
+- This update adds some basic options to make the seeding less random and more based on other site content. See the docs [here](https://github.com/studioespresso/craft3-seeder#settings). 
+
 ## 3.2.0 - 2019-12-23
 ### Added
 - support for Entries fields

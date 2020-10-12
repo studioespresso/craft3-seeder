@@ -69,6 +69,29 @@ With this setting set to `true`, we'll generate a block of each blocktype once i
 
 Add the array above to ``config/seeder.php`` to seed using assets from volume `1` and folder `test/`.
 
+### `fields` -  Basic field configuration
+
+
+````php
+'fields' => [
+    "sessions" => "ignore",
+    "radioField" => [
+        'value' => 'value2',
+    ],
+    "category" => [
+        'mode' => 'random',
+        'value' => [152, 153]
+    ]
+]
+````
+
+These are some basic examples of how you can defined seeding settings per field.
+The field handle should be the key in the array and the options are available right now:
+- "ignore" => skip the field when seeding
+- `["value" => "some string" ]` => Works to set a fixed value for plain text fields, checkboxes, radio buttons.
+- `["mode" => "random", "value" => [1, 2] ]` => Works with entries and category fields, values should be ids of those entries.
+
+
 ## Troubleshooting
 The most common problem with the plugins is getting the following error:
 ````Shell
