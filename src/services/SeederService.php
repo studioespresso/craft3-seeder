@@ -42,6 +42,10 @@ class SeederService extends Component
     {
         $entryFields = [];
         foreach ($fields as $field) {
+            if(isset(Seeder::$plugin->getSettings()->fields[$field->handle]) &&
+                Seeder::$plugin->getSettings()->fields[$field->handle] == 'ignore') {
+                continue;
+            }
             try {
                 $fieldData = $this->isFieldSupported($field);
                 if ($fieldData) {

@@ -66,7 +66,8 @@ class CTA extends Component
             'target' => $field->allowTarget ? $this->factory->boolean : null,
             'class' => array_rand($classes),
         ];
-        if (in_array('url', $field->allowedLinkNames)) {
+
+        if ((is_array($field->allowedLinkNames)  && in_array('url', $field->allowedLinkNames)) || $field->allowedLinkNames === '*' ) {
             $attr['type'] = 'url';
             $attr['value'] = $this->factory->url;
         } elseif (in_array('email', $field->allowedLinkNames)) {

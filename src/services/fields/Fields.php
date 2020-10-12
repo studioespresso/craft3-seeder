@@ -51,10 +51,12 @@ class Fields extends Component
 
     public $factory;
 
+    public $settings;
+
     public function __construct()
     {
         $this->factory = Factory::create();
-
+        $this->settings = Seeder::$plugin->getSettings();
     }
 
     public function Title($maxLength = 40)
@@ -107,6 +109,11 @@ class Fields extends Component
      */
     public function Categories($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         $source = explode(":", $field->source);
         $catGroup = Craft::$app->getCategories()->getGroupByUid($source[1]);
         $cats = Category::find()
@@ -129,6 +136,11 @@ class Fields extends Component
      */
     public function Dropdown($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         return $field->options[array_rand($field->options)]['value'];
     }
 
@@ -138,6 +150,11 @@ class Fields extends Component
      */
     public function Checkboxes($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         $checkedBoxes = [];
         for ($x = 1; $x <= rand(1, count($field->options)); $x++) {
             $checkedBoxes[] = $field->options[array_rand($field->options)]['value'];
@@ -151,6 +168,11 @@ class Fields extends Component
      */
     public function RadioButtons($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         return $field->options[array_rand($field->options)]['value'];
     }
 
@@ -260,6 +282,11 @@ class Fields extends Component
      */
     public function Entries($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         $criteria = Entry::find($field->getSettings());
         $criteria->limit = $field->limit;
         return $criteria->ids();
@@ -391,5 +418,21 @@ class Fields extends Component
         $result = Craft::$app->getElements()->saveElement($asset);
 
         return $asset;
+    }
+
+    private function getFieldConfig($field, $entry)
+    {
+        if (isset($this->settings->fields[$field->handle])) {
+            if (isset($this->settings->fields[$field->handle]['mode'])) {
+                $mode = $this->settings->fields[$field->handle]['mode'];
+                if ($mode === "random") {
+                    $key = array_rand($this->settings->fields[$field->handle]['value']);
+                    return [$this->settings->fields[$field->handle]['value'][$key]];
+                }
+            } elseif (isset($this->settings->fields[$field->handle]['value'])) {
+                return $this->settings->fields[$field->handle]['value'];
+            }
+        }
+        return false;
     }
 }
