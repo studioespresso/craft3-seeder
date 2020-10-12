@@ -46,4 +46,6 @@ class Settings extends Model
 
     public $useLocalAssets = false;
 
+    public $fields = [];
+
 }
