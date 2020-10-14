@@ -72,6 +72,10 @@ class Fields extends Component
      */
     public function PlainText($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
         return $this->factory->realText($field->charLimit ? $field->charLimit : 200);
     }
 
