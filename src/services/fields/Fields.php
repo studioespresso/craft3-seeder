@@ -27,6 +27,7 @@ use craft\fields\Entries;
 use craft\fields\Lightswitch;
 use craft\fields\Matrix;
 use craft\fields\MultiSelect;
+use craft\fields\Number;
 use craft\fields\PlainText;
 use craft\fields\RadioButtons;
 use craft\fields\Table;
@@ -72,6 +73,11 @@ class Fields extends Component
      */
     public function PlainText($field, $entry)
     {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
         return $this->factory->realText($field->charLimit ? $field->charLimit : 200);
     }
 
@@ -160,6 +166,20 @@ class Fields extends Component
             $checkedBoxes[] = $field->options[array_rand($field->options)]['value'];
         }
         return $checkedBoxes;
+    }
+
+    /**
+     * @param Number $field
+     * @param Entry $entry
+     */
+    public function Number($field, $entry)
+    {
+        $configValue = $this->getFieldConfig($field, $entry);
+        if ($configValue) {
+            return $configValue;
+        }
+
+        return rand($field->min, $field->max ? $field->max : 100);
     }
 
     /**

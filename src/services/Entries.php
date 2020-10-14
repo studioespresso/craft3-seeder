@@ -77,6 +77,8 @@ class Entries extends Component
                 Seeder::$plugin->seeder->saveSeededEntry($entry);
                 if ($entryType->fieldLayoutId) {
                     $entry = Seeder::$plugin->seeder->populateFields($typeFields, $entry);
+                    $entry->updateTitle();
+                    $entry->slug = '';
                     Craft::$app->getElements()->saveElement($entry);
                 }
             }
